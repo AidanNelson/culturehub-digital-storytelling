@@ -1,0 +1,22 @@
+{
+  "name": "virtual-venue-client",
+  "version": "1.0.0",
+  "description": "Repo for Virtual Venue",
+  "scripts": {
+    "start": "nodemon server/index.js",
+    "production": "forever start server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AidanNelson/virtual-venue.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AidanNelson/virtual-venue/issues"
+  },
+  "homepage": "https://github.com/AidanNelson/virtual-venue#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
