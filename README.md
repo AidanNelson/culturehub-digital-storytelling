@@ -45,38 +45,3 @@ There are several web pages available in the front-end. These are available at t
 [Show Control](./src/show-control/) - This is where you will control the show, move between scenes and otherwise affect the audience experience. Think of this page as home-base for a stage manager.
 
 [Broadcaster](./src/broadcaster/) - This page allows a live performer or showrunner to broadcast to the audience using WebRTC broadcasting.
-
-[Feed](./src/feed/) - This page displays a simple view of the current broadcast from the broadcaster, for testing and recording purposes.
-
-## Technologies at Play
-
-Here is a run down of some of the core technologies which enable this virtual venue to exist.
-
-### WebSockets
-
-### WebRTC
-
-### WebGL
-
-# To Do:
-
-### Server:
-
-- [ ] - Switch server to use HTTPS
-
-### Broadcaster:
-
-- [ ] - Use highest quality streams
-
-### Admin:
-
-- [ ] - Show currently active streams
-- [ ] - Show # of current audience members?
-
-### Client:
-
-- [ ] - Handle scene switching on client side
-- [ ] - How to handle switching between streams
-- [ ] - Can we handle dissolve or other filtering on videos? (i.e. https://www.curtainsjs.com/examples/multiple-video-textures/index.html)
-- [ ] - close Mediasoup Streams at end of lobby
-- [ ] - check which quality streams are being sent
