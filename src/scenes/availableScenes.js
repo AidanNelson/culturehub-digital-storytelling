@@ -1,6 +1,1 @@
-const availableScenes = [
-  'testScene1',
-  'testScene2',
-  'mouseExample',
-  'textExample',
-];
+const availableScenes = ['simpleExample', 'mouseExample', 'textExample'];
