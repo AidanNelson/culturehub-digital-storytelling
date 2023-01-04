@@ -5,4 +5,8 @@ const availableScenes = [
   'speechExample',
   'oscExample',
   'photoExample',
+  'socket',
+  'multipleusers',
+  'speech',
+  'body',
 ];

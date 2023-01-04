@@ -116,6 +116,11 @@ async function main() {
     });
 
     // Perhaps create a generic type
+    socket.on('data', (message) => {
+      console.log(message);
+      io.emit('data', message);
+    });
+
     socket.on('speech', (message) => {
       io.emit('speech', message);
     });
