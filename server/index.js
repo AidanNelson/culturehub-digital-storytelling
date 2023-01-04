@@ -77,7 +77,7 @@ async function main() {
 
     socket.on('interaction', (msg) => {
       console.log('relaying socket message');
-      io.sockets.emit('interaction', msg);
+      io.sockets.emit('interaction', { ...msg, id: socket.id }); // add source socket id to each message
     });
 
     // the server will aggregate mouse position data so the clients receive a single update for all peers

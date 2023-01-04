@@ -25,17 +25,27 @@
   </head>
   <body>
       <script>
-        console.log('in iframe')
-        navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+        let socket;
+        if (window.location.hostname === 'venue.itp.io') {
+          socket = io('https://venue.itp.io');
+        } else {
+          socket = io('http://localhost:3131');
+        }
+
         function setup(){
           createCanvas(windowWidth, windowHeight);
 
         }
         function draw(){
-          rect(200,200,200,200);
-
-          textSize(14);
-          text("scene two performance", 250,250);
+          // send mouse positions every 5 frames
+          if (frameCount % 5 === 0 && socket){
+            console.log("sending mouse position")
+            socket.emit("interaction", {
+              type: 'mouse', 
+              data: {x: mouseX, y: mouseY}
+            }
+            );
+          }
         }
       </script>
     </div>
