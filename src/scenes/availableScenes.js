@@ -3,4 +3,5 @@ const availableScenes = [
   'mouseExample',
   'textExample',
   'speechExample',
+  'oscExample',
 ];
