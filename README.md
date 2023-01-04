@@ -1,6 +1,4 @@
-This repository contains a templated codebase for a virtual venue. The goal of this project is to provide arts and educational organizations with a starting place for building their own web-based venues for live performances and virtual events.
-
-This project was started to support a live performance incubated at [CultureHub](https://www.culturehub.org/) in Spring 2022.
+This repository contains the virtual venue for CultureHub's Experiments in Digital Storytelling writers' workshop in January, 2023.
 
 # Getting Started
 
@@ -8,37 +6,25 @@ This guide assumes some familiarity with your the command line (a text-based int
 
 ```sh
 # download this repository and change directory (cd) into the root folder
-git clone https://github.com/AidanNelson/virtual-venue.git
-cd virtual-venue
+git clone https://github.com/AidanNelson/culturehub-digital-storytelling.git
+cd culturehub-digital-storytelling
 
 # install all dependencies on the front end
 npm install
 
-# start the front-end development server
-npm run watch
-
-# You should now be able to access the venue from your web-browser at http://localhost:1234/
-
-```
-
-In order to actually use this application, however, you will need to start the back-end server in a separate terminal
-
-```sh
-# enter into the /server folder and install all dependencies
-# note that this may take several minutes as it will compile the Mediasoup package
+# if you are developing features for the server,
+# change directory into the /server folder and install all server-side dependencies
 cd server
-npm install
-
-# create certificates for local development (only required once)
-# this will automatically set the country code to US.  Feel free to change if you like
-# you may be able to ignore all other parameters
-openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=US" -keyout certs/key.pem -out certs/cert.pem
+npm install # note that this may take several minutes as it will compile the Mediasoup WebRTC SFU package
 
 # once everything has been installed, start the server from the root of the repository
 cd ..
 npm run start-server
 
+# start the front-end development server
+npm run start
 
+# You should now be able to access the venue from your web-browser
 
 ```
 

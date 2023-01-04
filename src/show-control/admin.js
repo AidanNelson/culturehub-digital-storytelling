@@ -12,18 +12,18 @@ function setup() {
     socket = io('http://localhost:3131');
   }
 
-  document.getElementById('clearChat').addEventListener('click', () => {
-    socket.emit('clearChat');
-  });
+  // document.getElementById('clearChat').addEventListener('click', () => {
+  //   socket.emit('clearChat');
+  // });
 
-  document.getElementById('sendAdminMessage').addEventListener('click', () => {
-    let message = document.getElementById('adminMessageInput').value;
-    console.log('sending admin message:', message);
-    let data = {
-      msg: message,
-    };
-    socket.emit('adminMessage', data);
-  });
+  // document.getElementById('sendAdminMessage').addEventListener('click', () => {
+  //   let message = document.getElementById('adminMessageInput').value;
+  //   console.log('sending admin message:', message);
+  //   let data = {
+  //     msg: message,
+  //   };
+  //   socket.emit('adminMessage', data);
+  // });
 
   // setup scene selection logic
   let sceneSelect = document.getElementById('sceneSelect');
@@ -66,14 +66,14 @@ function setup() {
   // });
   // sceneSwitcherButtons[2] = showButton;
 
-  let showChatButton = document.getElementById('showChatButton');
-  showChatButton.addEventListener('click', () => {
-    socket.emit('showChat', true);
-  });
-  let hideChatButton = document.getElementById('hideChatButton');
-  hideChatButton.addEventListener('click', () => {
-    socket.emit('showChat', false);
-  });
+  // let showChatButton = document.getElementById('showChatButton');
+  // showChatButton.addEventListener('click', () => {
+  //   socket.emit('showChat', true);
+  // });
+  // let hideChatButton = document.getElementById('hideChatButton');
+  // hideChatButton.addEventListener('click', () => {
+  //   socket.emit('showChat', false);
+  // });
 }
 
 setup();
