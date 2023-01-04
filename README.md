@@ -21,9 +21,6 @@ npm install # note that this may take several minutes as it will compile the Med
 cd ..
 npm run start-server
 
-# start the front-end development server
-npm run start
-
 # You should now be able to access the venue from your web-browser
 
 ```
