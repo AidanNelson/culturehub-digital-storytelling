@@ -4,4 +4,5 @@ const availableScenes = [
   'textExample',
   'speechExample',
   'oscExample',
+  'photoExample',
 ];
