@@ -9,4 +9,5 @@ const availableScenes = [
   'multipleusers',
   'speech',
   'body',
+  'audienceMedia',
 ];
