@@ -21,7 +21,7 @@
     "express": "^4.17.3",
     "ip": "^1.1.8",
     "nedb": "^1.8.0",
-    "simple-mediasoup-peer-server": "0.0.1",
+    "simple-mediasoup-peer-server": "0.0.2",
     "socket.io": "^4.4.1"
   }
 }
