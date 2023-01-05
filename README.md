@@ -12,10 +12,12 @@ cd culturehub-digital-storytelling
 # install all dependencies on the front end
 npm install
 
-# if you are developing features for the server,
 # change directory into the /server folder and install all server-side dependencies
+# note that you will need the following build dependencies to install the underlying
+# mediasoup package: https://mediasoup.org/documentation/v3/mediasoup/installation/#requirements
+# this will likely take a few minutes to build
 cd server
-npm install # note that this may take several minutes as it will compile the Mediasoup WebRTC SFU package
+npm install
 
 # once everything has been installed, start the server from the root of the repository
 cd ..
