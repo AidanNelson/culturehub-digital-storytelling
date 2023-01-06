@@ -1,7 +1,9 @@
 var socket = io();
+let questions=["Which mountains do you travel when you go to sleep?","Which sidewalk looks the most familiar to you?","What is the house of your dreams?","What clouds make you feel at home?"];
 
+let q_index=3;
 
-let prompt="Sorry, our opperator couldn't reach you over the phone. Please help verify your identity."
+let prompt="Please help us verify your identity."
 let socket_text="Which of the following most resembles the house of your dreams?"
 let back_col=[102,127,255]
 let images=[]
@@ -12,9 +14,7 @@ let h;
 let w;
 
 function preload() {
-  for (let i=0;i<9;i++){
-    images[i]=loadImage('./houses/house'+i+".jpg")
-  }
+  loadImages();
 }
 
 function setup() {
@@ -39,6 +39,7 @@ function draw() {
 function skin(){
   noStroke();
   fill(255);
+  socket_text=questions[q_index];
 
   // rectMode(CENTER);
   rect((width-w)/2,(height-h)/2,w,h)
@@ -47,11 +48,16 @@ function skin(){
   textWrap(WORD);
   fill(255)
   text(prompt+"\n"+socket_text,(width-w)/2+8,(height-h)/2+10,w-12)
-  loadImages(h,w);
+  showImages(h,w);
 
 }
+function loadImages(){
+  for (let i=0;i<9;i++){
+      images[i]=loadImage('../images/'+q_index+'/'+i+".jpg")
+  }
+}
 
-function loadImages(h,w){
+function showImages(h,w){
   let margin=4;
   w=w-margin*5;//offset margins
   let x_img=w/3;
@@ -132,13 +138,9 @@ socket.on("data", function (data) {
 });
 
 socket.on("server_prompt", function (data) {
-  //the server needs to send a prompt and an array of 9 images url
-  socket_text=data.prompt;
-
-  for (let i=0;i<9;i++){
-    // images[i]=loadImage('./houses/house'+i+".jpg")
-    images[i]=loadImage(data.img_src[i]);
-  }
+  q_index=data;
+  socket_text=questions[data];
+  loadImages();
   skin();//skin just redraws the captcha with the prompt and images
 
 });
