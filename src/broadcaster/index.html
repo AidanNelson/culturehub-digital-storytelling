@@ -12,6 +12,9 @@
   </head>
 
   <body>
+    Select a scene to associate this video with
+    <select id="sceneSelect"></select>
+
     <div class="container p-5 m-5">
       <div class="row justify-content-center p-2">
         <div class="col">
@@ -52,6 +55,8 @@
 
     <script src="../libs/SimpleMediasoupPeer.js"></script>
     <script src="../libs/socket.io.js"></script>
+    <script src="../scenes/availableScenes.js"></script>
     <script type="module" src="./broadcaster.js"></script>
+
   </body>
 </html>
