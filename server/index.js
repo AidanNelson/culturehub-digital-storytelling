@@ -68,6 +68,29 @@ async function main() {
     // clients[socket.id].position = [5000, 100, 0];
     clients[socket.id].mousePosition = { x: -100, y: -100 };
     clients[socket.id].size = 1;
+    
+    // This will contain information about which scene the user is on
+    clients[socket.id].sceneId = "";
+    // This will contain the user's 'name'
+    // This will contain the users's phone number
+
+    // When only 1 user is going to a different scene
+    socket.on('individualSceneIdx', (data) => {
+      console.log('Switching to scene ', data);
+      clients[socket.id].sceneId = data;
+      //sceneId = data;
+      //io.emit('sceneIdx', data);
+    });
+
+    // Add a user name
+    socket.on('name', (data) => {
+      clients[socket.id].name = data;
+    });
+
+    // Add a user phone
+    socket.on('phone', (data) => {
+      clients[socket.id].phone = data;
+    });
 
     socket.on('disconnect', () => {
       delete clients[socket.id];
