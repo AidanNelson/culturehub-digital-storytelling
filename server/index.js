@@ -4,7 +4,7 @@ const express = require('express');
 // const https = require("https");
 const http = require('http');
 const Datastore = require('nedb');
-// const MediasoupManager = require('simple-mediasoup-peer-server');
+const MediasoupManager = require('simple-mediasoup-peer-server');
 
 let dreams = [];
 let clients = {};
@@ -274,7 +274,7 @@ async function main() {
     }
   }, 10000);
 
-  // new MediasoupManager(io);
+  new MediasoupManager(io);
 }
 
 main();
