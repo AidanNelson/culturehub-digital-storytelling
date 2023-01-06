@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+        overflow: hidden;
+      }
+      #mainContainer {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0px;
+        left: 0px;
+        background-color: #ff0000cc;
+      }
+    </style>
+
+    <script src="../libs/p5.js"></script>
+    <script src="../libs/p5.sound.min.js"></script>
+    <script src="../libs/p5.speech.js"></script>
+    <script src="../libs/socket.io.js"></script>
+  </head>
+  <body>
+      <script>
+        let socket;
+
+        let dreams = [];
+
+        let x = 1;
+        let y = 1;
+        
+        function setup(){
+          socket = io();
+          socket.emit('getdreams', 'thanks');
+          socket.on('alldreams', function(data) {
+            console.log(data);
+            //dreams = data;
+            for (var i = 0; i < data.length; i++) {
+              dreams.push({x:width/2,y:0-100*i,dream:data[i]});
+            }
+          });
+          socket.on('dream', function(data) {
+            console.log(data);
+            dreams.push({x:width/2,y:0,dream:data});
+          });
+
+          createCanvas(windowWidth, windowHeight);
+          x = width/2;
+          
+        }
+
+        function draw(){
+          background(4, 244, 4);
+          fill(255);
+          stroke(0);
+          strokeWeight(2);
+          textSize(25);
+          textAlign(CENTER);
+          rectMode(CENTER);
+          textWrap(WORD, 100);
+          
+          for (var i = 0; i < dreams.length; i++) {
+            text(dreams[i].dream, dreams[i].x, dreams[i].y);
+
+            dreams[i].y++;
+          }          
+        }
+      </script>
+    </div>
+  </body>
+</html>

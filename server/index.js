@@ -6,6 +6,7 @@ const http = require('http');
 const Datastore = require('nedb');
 // const MediasoupManager = require('simple-mediasoup-peer-server');
 
+let dreams = [];
 let clients = {};
 let adminMessage = '';
 let sceneId = null; // start at no scene
@@ -29,6 +30,19 @@ async function main() {
     timestampData: true,
   }); //creates a new one if needed
   db.loadDatabase(); //loads the db with the data
+
+  let dreamsdb = new Datastore({
+    filename: 'dreams.db',
+    timestampData: true,
+  }); //creates a new one if needed
+  dreamsdb.loadDatabase(); //loads the db with the data
+
+    // load dreams
+    dreamsdb.find({})
+      .exec(function (err, docs) {
+        dreams = docs;
+        console.log(dreams);
+      });
 
   let io = require('socket.io')();
   io.listen(server, {
@@ -142,6 +156,26 @@ async function main() {
     socket.on('data', (message) => {
       console.log(message);
       io.emit('data', message);
+
+      if (message.dreampast) {
+        dreams.push(message.dreampast);
+        dreamsdb.insert(message.dreampast);
+        io.emit('dream',message.dreampast);
+      } else if (message.dreampresent) {
+        dreams.push(message.dreampresent);
+        dreamsdb.insert(message.dreampresent);
+        io.emit('dream',message.dreampresent);
+      } else if (message.dreamfuture) {
+        dreams.push(message.dreamfuture);
+        dreamsdb.insert(message.dreamfuture);
+        io.emit('dream',message.dreamfuture);
+      }
+
+    });
+
+    socket.on('getdreams', (message) => {
+      console.log('getdreams');
+      socket.emit('alldreams',dreams);
     });
 
     socket.on('speech', (message) => {

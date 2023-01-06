@@ -49,7 +49,7 @@
       <div id='chatForm'>
       <h4>Please enter your phone number</h4>
       <input id="input_field" type="tel">
-      <button>Send</button>
+      <button id="send">Send</button>
       </div>
       <script>
 
@@ -79,6 +79,7 @@
 
         window.addEventListener('load', function() {
           $('#chatForm h4').text("Enter a dream for the past");
+          $('#send').click(sendMsg);
         });
 
         function sendMsg(){
@@ -86,21 +87,22 @@
           if(state == "dreampast"){
             $('#chatForm h4').text("Thank you.  Now enter a dream for the present");
             state = "dreampresent";
+            socket.emit("data", {dreampast: chatInput.value});
+
           } else if (state == "dreampresent") {
             $('#chatForm h4').text("Thank you.  Now enter a dream for the future");
             state = "dreamfuture";
+            socket.emit("data", {dreampresent: chatInput.value});
+
           } else {
+            socket.emit("data", {dreamfuture: chatInput.value});
+
             $('#chatForm h4').text("Yummy!, you may proceed");
             setTimeout(function() {
-              window.location("blender-audience.html");
+              window.location.href = "blender-audience.html";
             }, 3000);
           }
 
-          socket.emit("interaction", {
-            type: state+"-msg",
-            data: {msg: chatInput.value}
-          })
-          
           chatInput.value = "";
         }
 
