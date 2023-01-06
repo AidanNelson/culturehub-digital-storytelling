@@ -21,6 +21,7 @@
           controls
           autoplay
           loop
+          style="display:none;"
           src="">
       </audio>
       <script>
@@ -68,9 +69,9 @@
         function draw(){
           background(0);
 
-          // if (frameCount % 5 === 0){
+          if (frameCount % 5 === 0){
            tallyVotes();
-        // }
+        }
 
         // change music based on current votes
         if (frameCount % 120 === 0){
