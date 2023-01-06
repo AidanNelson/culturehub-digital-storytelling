@@ -161,16 +161,16 @@ async function main() {
       io.emit('data', message);
 
       if (message.dreampast) {
-        dreams.push(message.dreampast);
-        dreamsdb.insert(message.dreampast);
+        dreams.push({past: message.dreampast});
+        dreamsdb.insert({past: message.dreampast});
         io.emit('dream',message.dreampast);
       } else if (message.dreampresent) {
-        dreams.push(message.dreampresent);
-        dreamsdb.insert(message.dreampresent);
+        dreams.push({present: message.dreampresent});
+        dreamsdb.insert({present: message.dreampresent});
         io.emit('dream',message.dreampresent);
       } else if (message.dreamfuture) {
-        dreams.push(message.dreamfuture);
-        dreamsdb.insert(message.dreamfuture);
+        dreams.push({future: message.dreamfuture});
+        dreamsdb.insert({future: message.dreamfuture});
         io.emit('dream',message.dreamfuture);
       }
 
