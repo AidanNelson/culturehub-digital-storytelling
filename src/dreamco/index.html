@@ -7,15 +7,18 @@
         margin: 20px;
         padding: 0px;
         overflow: hidden;
-        color:white;
+        color:black;
       }
       #container {
           display:flex;
+          flex-wrap: wrap;
       }
       .box {
           border: 1px solid black;
           padding: 20px;
           margin:20px;
+          min-width: 250px;
+          min-height:150px;
       }
     </style>
 
@@ -27,7 +30,9 @@
     <div id="container">
         <div class="box" id="userList">
             <h4>Entrance Room</h4>
+        <p>To Call List</p>
         <div style="color:green" id="phone"></div>
+        <p>Refusal List</p>
         <div style="color:red" id="refuse"></div>
         </div>  
         <div class="box" id="images">
@@ -35,6 +40,10 @@
         </div>
         <div class="box" id="dreamwriting">
             <h4>Dream Writing</h4>
+        </div>
+
+        <div class="box" id="theater">
+            <h4>Dream Theater</h4><button id="openDreamTheater">Begin</button>
         </div>
     </div>
       <script>
@@ -54,24 +63,24 @@
               document.getElementById("messages").innerHTML += `<h4><strong>${msg.id}:</strong>${msg.data.msg}</h4>`
               break;
             case "chatroom-phone":
-              $('#userList #phone').append(`<p socketid="${msg.id}" onclick="changeScene('${msg.id}', '/scenes/marqueetest.html')"><strong>${msg.name}:</strong> ${msg.data.phone}</p>`)
+              $('#userList #phone').append(`<p socketid="${msg.id}" onclick="changeScene('${msg.id}', '/scenes/marqueetest.html', '#dreamwriting')"><strong>${msg.name}:</strong> ${msg.data.phone}</p>`)
               break
             case "chatroom-refuse":
-              $('#userList #refuse').append(`<p socketid="${msg.id}"" onclick="changeScene('${msg.id}', '/scenes/marqueetest.html')">${msg.data.name}</p>`)
+              $('#userList #refuse').append(`<p socketid="${msg.id}" onclick="changeScene('${msg.id}', '/scenes/marqueetest.html', '#images')">${msg.data.name}</p>`)
               break
           }
         })
-        socket.on("userPositions", (data)=> {
-          users = {...users, data};
+
+        $('#openDreamTheater').click(function(){
+            $('[socketid]').appendTo('#theater')
+            socket.emit('sceneIdx', 'body')
         })
-
-
-        function changeScene(user, scene){
+        function changeScene(user, scene, destination){
             console.log(user, scene)
             socket.emit('sendIndividualSceneChange', {target:user, url:scene})
+            $(`[socketid=${user}`).appendTo(destination)
             // socket.emit('sceneIdx', sceneSelect.value);
         }
-        // class for falling keys
 
       </script>
     </div>
