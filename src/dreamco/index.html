@@ -9,7 +9,14 @@
         overflow: hidden;
         color:white;
       }
-      
+      #container {
+          display:flex;
+      }
+      .box {
+          border: 1px solid black;
+          padding: 20px;
+          margin:20px;
+      }
     </style>
 
 
@@ -17,10 +24,19 @@
   </head>
   <body>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <div id="userList">
-      <div style="color:green" id="phone"></div>
-      <div style="color:red" id="refuse"></div>
-    </div>  
+    <div id="container">
+        <div class="box" id="userList">
+            <h4>Entrance Room</h4>
+        <div style="color:green" id="phone"></div>
+        <div style="color:red" id="refuse"></div>
+        </div>  
+        <div class="box" id="images">
+            <h4>Image Classification</h4>
+        </div>
+        <div class="box" id="dreamwriting">
+            <h4>Dream Writing</h4>
+        </div>
+    </div>
       <script>
         let socket;
         let users;
@@ -38,10 +54,10 @@
               document.getElementById("messages").innerHTML += `<h4><strong>${msg.id}:</strong>${msg.data.msg}</h4>`
               break;
             case "chatroom-phone":
-              $('#userList #phone').append(`<p><strong>${msg.name}:</strong> ${msg.data.phone}</p>`)
+              $('#userList #phone').append(`<p socketid="${msg.id}" onclick="changeScene('${msg.id}', '/scenes/marqueetest.html')"><strong>${msg.name}:</strong> ${msg.data.phone}</p>`)
               break
             case "chatroom-refuse":
-              $('#userList #refuse').append(`<p onclick="changeScene(this)">${msg.data.name}</p>`)
+              $('#userList #refuse').append(`<p socketid="${msg.id}"" onclick="changeScene('${msg.id}', '/scenes/marqueetest.html')">${msg.data.name}</p>`)
               break
           }
         })
@@ -50,7 +66,9 @@
         })
 
 
-        function changeScene(user){
+        function changeScene(user, scene){
+            console.log(user, scene)
+            socket.emit('sendIndividualSceneChange', {target:user, url:scene})
             // socket.emit('sceneIdx', sceneSelect.value);
         }
         // class for falling keys

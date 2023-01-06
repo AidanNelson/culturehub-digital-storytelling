@@ -78,8 +78,9 @@
               break
           }
         })
-        socket.on("userPositions", (data)=> {
-          users = {...users, data};
+        socket.on("changeScene", (data)=> {
+          console.log(data)
+          location.href = data
         })
 
         document.addEventListener('keydown', (ev) => {

@@ -81,6 +81,9 @@ async function main() {
       //sceneId = data;
       //io.emit('sceneIdx', data);
     });
+    socket.on('sendIndividualSceneChange', (data) => {
+      socket.to(data.target).emit('changeScene', data.url)
+    })
 
     // Add a user name
     socket.on('name', (data) => {
