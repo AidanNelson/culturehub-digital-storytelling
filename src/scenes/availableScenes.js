@@ -6,13 +6,4 @@ const availableScenes = [
   'final',
   'body',
   'chatroom'  
-  /*'simpleExample',
-  'mouseExample',
-  'textExample',
-  'speechExample',
-  'oscExample',
-  'photoExample',
-  'socket',
-  'multipleusers',
-  'speech',
-];
+]

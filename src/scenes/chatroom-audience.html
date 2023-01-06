@@ -47,15 +47,16 @@
     </div>  
     <div id ='messages'></div>
       <div id='chatForm'>
-      <h4>Please enter your phone number</h4>
+      <h4>Please enter your first name</h4>
       <input id="input_field" type="tel">
       <button>Send</button>
       </div>
       <script>
         let socket;
         let users;
+        let name;
         let userListEl = document.getElementById('userList')
-        let state ="phonenumber"
+        let state ="name"
         if (window.location.hostname === 'venue.itp.io') {
           socket = io('https://venue.itp.io');
         } else {
@@ -67,13 +68,13 @@
 
           switch (msg.type) {
             case "chatroom-msg":
-              document.getElementById("messages").innerHTML += `<h4><strong>${msg.id}:</strong>${msg.data.msg}</h4>`
+              document.getElementById("messages").innerHTML += `<h4><strong>${msg.data.name}:</strong>${msg.data.msg}</h4>`
               break;
             case "chatroom-phone":
-              $('#userList #phone').append(`<p>${msg.id}</p>`)
+              $('#userList #phone').append(`<p>${msg.data.name}</p>`)
               break
             case "chatroom-refuse":
-              $('#userList #refuse').append(`<p>${msg.id}</p>`)
+              $('#userList #refuse').append(`<p>${msg.data.name}</p>`)
               break
           }
         })
@@ -86,15 +87,23 @@
             sendMsg()
           }
         })
+        $('button').click(sendMsg)
 
         function sendMsg(){
           let chatInput = document.getElementById("input_field")
-          if(state = "phonenumber"){
+          if(state == "name"){
+            if(chatInput.value.length > 0){
+              name = chatInput.value
+              state = "phonenumber"
+              $('#chatForm h4').text(`Hello ${name}, thank you for joining us. Please enter your phone number.`)
+            }
+          }
+          else if(state == "phonenumber"){
             let validPhone = chatInput.value.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)
             if(validPhone){
               socket.emit("interaction", {
                   type: "chatroom-phone",
-                  data: {"phone": chatInput.value}
+                  data: {"phone": chatInput.value, name: name}
               })
               $('#chatForm h4').text("An operator will be with you shortly. In the meantime you may chat with your fellow dreamers")
               state = "chat"
@@ -102,7 +111,7 @@
             else if(chatInput.value.includes("I REFUSE")){
               socket.emit("interaction", {
                   type: "chatroom-refuse",
-                  data: {}
+                  data: {name: name}
               })
               $('#chatForm h4').text("Your refusal is acknowledged and respected. Please wait for a unique opportunity to be provided for you")
               state = "chat"
@@ -114,7 +123,7 @@
           else if(state = "chat"){
             socket.emit("interaction", {
               type: "chatroom-msg",
-              data: {msg: chatInput.value}
+              data: {name: name, msg: chatInput.value}
              })
           }
           chatInput.value = ""
