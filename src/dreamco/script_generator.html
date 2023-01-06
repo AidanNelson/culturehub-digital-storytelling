@@ -18,8 +18,7 @@
     <script src="playscriptTemplate.js"></script>
   </head>
   <body>
-    <button onclick="generateScript()">Generate</button>
-    <button onclick="getDreams()">Get Dreams</button>
+    <button onclick="getDreams()">Generate</button>
     <div id="container">
         <p><strong>Current Line:</strong></p>
         <p id="currentLine"></p>
@@ -61,6 +60,7 @@
             }
           })
           grammar = tracery.createGrammar(grammarObj);
+          generateScript()
           console.log(dreams)
         })
         $('#sendLine').click(function(){
@@ -68,6 +68,9 @@
           $('#currentLine').html(lines[counter])
           counter++
           $('#nextLine').html(lines[counter])
+        })
+        $(document).keydown((e)=> {
+          if(e.key == "Enter")  $('#sendLine').trigger("click")
         })
         function generateScript(){
           let script = grammar.flatten("#scriptTemplate#")

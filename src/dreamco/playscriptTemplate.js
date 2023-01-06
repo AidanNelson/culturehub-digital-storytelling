@@ -33,8 +33,6 @@ A: No?
 B: No.
 …
 B: Well, except —
-A is pouring them drinks from the blender as this continues — hands B a glass.
-
 I used to have this recurring dream where #dreampast#,
 and #dreampast#,
  and #dreampast#.
