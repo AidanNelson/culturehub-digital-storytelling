@@ -11,4 +11,6 @@ const availableScenes = [
   'body',
   'audienceMedia',
   'group1-music',
+  'group1-background',
+  'group1-lights',
 ];
