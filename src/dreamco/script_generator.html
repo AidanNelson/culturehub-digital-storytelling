@@ -19,11 +19,16 @@
   </head>
   <body>
     <button onclick="generateScript()">Generate</button>
+    <button onclick="getDreams()">Get Dreams</button>
     <div id="container">
+        <p><button id="sendLine">Send</button><span id="nextLine"></span></p>
         <pre></pre>
     </div>
       <script>
         let socket;
+        let dreams;
+        let lines = []
+        let counter = 0;
         let grammarObj = {
             "place": ["SEARS"],
             "person":["Todd"],
@@ -31,9 +36,9 @@
             "lovedOne":["Mom"],
             "color":["blue"],
             "whatIsADream":["a star"],
-            "pastDream":["we will forget"],
-            "presentDream": ["being a gundam"],
-            "futureDream":["the sea covers us all"],
+            "dreampast":["we will forget"],
+            "dreampresent": ["being a gundam"],
+            "dreamfuture":["the sea covers us all"],
             "scriptTemplate":[scriptTemplate]
         }
         let grammar = tracery.createGrammar(grammarObj);
@@ -43,10 +48,42 @@
         } else {
           socket = io('http://localhost:3131');
         }
+        socket.on('alldreams', (data) => {
+          dreams = data
+          data.forEach((dream)=> {
+            dream.dream = dream.dream.trim()
+            if(!grammarObj[dream.type].includes(dream.dream)){
+              grammarObj[dream.type].push(dream.dream)
+            }
+          })
+          grammar = tracery.createGrammar(grammarObj);
+          console.log(dreams)
+        })
+        $('#sendLine').click(function(){
+          socket.emit("data", {type:"dreamLine", line:lines[counter]})
+          counter++
+          $('#nextLine').html(lines[counter])
+        })
         function generateScript(){
           let script = grammar.flatten("#scriptTemplate#")
         console.log(script)
         $('pre').text(script)
+        lines = script.split("A:")
+        console.log(lines)
+        let temp = []
+          lines.forEach((line) => {
+            line = line.replace(/(\r\n|\n|\r)/gm, " ");
+            line = "<span class='ALine'>A: " + line
+            line = line.replace("B:", "</span><br><span class='BLine'>B:") + "</span>" 
+            temp.push(line)
+          })
+          lines = temp
+          $('#nextLine').html(temp[counter])
+        }
+        function getDreams(){
+          console.log(socket)
+          socket.emit("getdreams")
+          console.log('getting dreams')
         }
       </script>
     </div>

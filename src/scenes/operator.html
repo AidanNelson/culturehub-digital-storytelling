@@ -32,7 +32,11 @@
         let sub;
 
         function setup(){
-          socket = io();
+          if (window.location.hostname === 'venue.itp.io') {
+            socket = io('https://venue.itp.io');
+          } else {
+            socket = io('http://localhost:3131');
+          }
           type = select("#type");
           dream = select("#dream");
           sub = select("#sub");

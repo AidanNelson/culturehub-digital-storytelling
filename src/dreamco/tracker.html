@@ -34,7 +34,10 @@
         <div style="color:green" id="phone"></div>
         <p>Refusal List</p>
         <div style="color:red" id="refuse"></div>
-        </div>  
+        </div>
+        <div class="box" id="processing">
+          <h4>Call Processing</h4>
+      </div>  
         <div class="box" id="images">
             <h4>Image Classification</h4>
         </div>
@@ -63,10 +66,13 @@
               document.getElementById("messages").innerHTML += `<h4><strong>${msg.id}:</strong>${msg.data.msg}</h4>`
               break;
             case "chatroom-phone":
-              $('#userList #phone').append(`<p socketid="${msg.id}" onclick="changeScene('${msg.id}', '/scenes/marqueetest.html', '#dreamwriting')"><strong>${msg.name}:</strong> ${msg.data.phone}</p>`)
+              $('#userList #phone').append(`<p socketid="${msg.id}" onclick="changeScene('${msg.id}', this)"><strong>${msg.data.name}:</strong> ${msg.data.phone}</p>`)
               break
             case "chatroom-refuse":
-              $('#userList #refuse').append(`<p socketid="${msg.id}" onclick="changeScene('${msg.id}', '/scenes/marqueetest.html', '#images')">${msg.data.name}</p>`)
+              $('#userList #refuse').append(`<p socketid="${msg.id}" onclick="changeScene('${msg.id}', this)">${msg.data.name}</p>`)
+              break
+            case "update-user":
+              $(`[socketid=${msg.data.target}`).appendTo(msg.data.destination)
               break
           }
         })
@@ -75,10 +81,28 @@
             $('[socketid]').appendTo('#theater')
             socket.emit('sceneIdx', 'body')
         })
-        function changeScene(user, scene, destination){
-            console.log(user, scene)
-            socket.emit('sendIndividualSceneChange', {target:user, url:scene})
-            $(`[socketid=${user}`).appendTo(destination)
+        function changeScene(user, element){
+            console.log(element)
+            console.log(element.parentElement)
+            let destination;
+            let url;
+            if(element.parentElement.id == "phone"){
+              url = null
+              destination = "#processing"
+              socket.emit("interaction", {type:"update-user", data:{destination:destination, target:user}})
+              return
+            }
+            else if (element.parentElement.id == "refuse"){
+              url = "/scenes/image-audience.html"
+              destination = "#images"
+            }
+            else if (element.parentElement.id == "processing"){
+              url ="/scenes/enterdream-audience.html"
+              destination = "#dreamwriting"
+            }
+            // console.log(user, scene)
+            socket.emit("interaction", {type:"update-user", data:{destination:destination, target:user}})
+            socket.emit('sendIndividualSceneChange', {target:user, url:scene, destination:destination})
             // socket.emit('sceneIdx', sceneSelect.value);
         }
 

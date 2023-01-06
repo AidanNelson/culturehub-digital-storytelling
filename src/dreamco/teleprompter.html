@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      html,
+      body {
+        margin: 20px;
+        padding: 0px;
+        color:black;
+      }
+      h1 {
+          overflow:wrap;
+          font-size:5vh;
+      }
+      .ALine {
+          color:white;
+          background-color:black;
+          margin-bottom: 12px;
+          display:block
+      }
+    </style>
+
+
+    <script src="../libs/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <h1></h1>
+      <script>
+
+        if (window.location.hostname === 'venue.itp.io') {
+          socket = io('https://venue.itp.io');
+        } else {
+          socket = io('http://localhost:3131');
+        }
+        socket.on("data", (data) => {
+            if(data.type =="dreamLine"){
+                $('h1').html(data.line)
+            }
+        })
+      </script>
+    </div>
+  </body>
+</html>
