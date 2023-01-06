@@ -21,6 +21,10 @@
     <button onclick="generateScript()">Generate</button>
     <button onclick="getDreams()">Get Dreams</button>
     <div id="container">
+        <p><strong>Current Line:</strong></p>
+        <p id="currentLine"></p>
+        <p><strong>Next Line:</strong></p>
+
         <p><button id="sendLine">Send</button><span id="nextLine"></span></p>
         <pre></pre>
     </div>
@@ -61,6 +65,7 @@
         })
         $('#sendLine').click(function(){
           socket.emit("data", {type:"dreamLine", line:lines[counter]})
+          $('#currentLine').html(lines[counter])
           counter++
           $('#nextLine').html(lines[counter])
         })
