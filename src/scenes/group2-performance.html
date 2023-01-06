@@ -30,7 +30,8 @@
 <body>
     <script>
         let lines = "";
-        let displayText = "";
+        let displayText = "", lineOne = "", lineTwo = "", lineThree = "";
+        let divider = 40; //width/30 will be the size of the text and the measurement for distance
         let bkCol = 255;
         let socket;
 
@@ -48,8 +49,16 @@
                     // got text interaction
                     console.log(msg.data)
                     displayText += msg.data;
-                    if (displayText.length > 100) {
+
+                    console.log(displayText);
+                    if (displayText.length > 180) {
                         displayText = "";
+                    } else if (displayText.length > 120) {
+                        lineThree = displayText.substr(118, displayText.length);
+                    } else if (displayText.length > 60) {
+                        lineTwo = displayText.substr(58, displayText.length);
+                    } else {
+                        lineOne = displayText;
                     }
                     break;
             }
@@ -59,25 +68,19 @@
             createCanvas(windowWidth, windowHeight);
             //ss = new p5.Speech();
             textAlign(CENTER, CENTER);
-            textSize(width / 50);
-
-            setInterval(changeCol, 5000);
+            textSize(width / divider);
+            setInterval(changeCol, 15000);
         }
         function changeCol() {
-            bkCol = color(random(255), random(255), random(255));
-            ss.speak(displayText);
+            bkCol = color(random(50, 255), random(50, 255), random(50, 255));
+            //ss.speak(displayText);
         }
         function draw() {
             background(bkCol);
-            text(displayText, width / 2, height / 2);
+            text(lineOne, width / 2, height / 2 - width / divider - 20);
+            text(lineTwo, width / 2, height / 2);
+            text(lineThree, width / 2, height / 2 + width / divider + 20);
         }
-        // function keyPressed() {
-        //     // lines = lines + key;
-        //     socket.emit("interaction", {
-        //         type: "text",
-        //         data: key
-        //     });
-        // }
 
     </script>
     </div>
