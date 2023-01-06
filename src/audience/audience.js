@@ -47,18 +47,35 @@ function setScene(data) {
 function gotTrack(track, id, label) {
   console.log(`Got track of kind ${label} from ${id}`);
 
-  let isBroadcast = label == 'video-broadcast' || label == 'audio-broadcast';
+  //let isBroadcast = label == document.getElementById('sceneContainer').contentWindow + '-video-broadcast' || label == document.getElementById('sceneContainer').contentWindow + '-audio-broadcast';
+  let isBroadcast = true;
+
+  console.log('isBroadcast ' + isBroadcast);
 
   let el = document.getElementById(id + '_' + label);
 
-  if (isBroadcast && track.kind === 'video') {
-    el = document.getElementById('broadcastVideo');
-  }
-  if (isBroadcast && track.kind === 'audio') {
-    el = document.getElementById('broadcastAudio');
-    el.volume = 1;
+  if (isBroadcast) {
+    if (isBroadcast && track.kind === 'video') {
+      el = document.getElementById('broadcastVideo');
+    } else if (isBroadcast && track.kind === 'audio') {
+      el = document.getElementById('broadcastAudio');
+      el.volume = 1;
+    }
+
+    el.srcObject = null;
+    el.srcObject = new MediaStream([track]);
+  
+    el.onloadedmetadata = (e) => {
+      el.play().catch((e) => {
+        console.log('Play Error: ' + e);
+      });
+    };
   }
 
+
+
+  // Should we even do this?  Probably not
+  /*
   if (track.kind === 'video') {
     if (el == null) {
       console.log('Creating video element for client with ID: ' + id);
@@ -84,7 +101,7 @@ function gotTrack(track, id, label) {
       el.volume = 0;
     }
   }
-
+  
   el.srcObject = null;
   el.srcObject = new MediaStream([track]);
 
@@ -93,4 +110,5 @@ function gotTrack(track, id, label) {
       console.log('Play Error: ' + e);
     });
   };
+  */
 }
