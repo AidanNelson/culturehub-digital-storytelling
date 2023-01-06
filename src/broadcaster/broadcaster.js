@@ -19,11 +19,11 @@ async function startBroadcast() {
 async function main() {
   console.log('~~~~~~~~~~~~~~~~~')
 
-  if (window.location.hostname === 'venue.itp.io') {
+  // if (window.location.hostname === 'venue.itp.io') {
     socket = io('https://venue.itp.io')
-  } else {
-    socket = io('http://localhost:3131')
-  }
+  // } else {
+  //   socket = io('http://localhost:3131')
+  // }
 
   socket.on('connect', () => {
     console.log('Socket ID: ', socket.id) // x8WIv7-mJelg7on_ALbx
