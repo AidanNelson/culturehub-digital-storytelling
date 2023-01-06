@@ -32,11 +32,8 @@
           socket = io('http://localhost:3131');
         }
 
-        let clients = {};
         let votes = [0,0,0,0];
-        socket.on('mousePositions', (msg) => {
-          clients = msg;
-        })
+
         socket.on('interaction', (msg) => {
           switch (msg.type){
             case "currentVotes":
@@ -91,6 +88,7 @@
             // # of votes
             push();
             textAlign(CENTER);
+            textSize(24);
             stroke(255,255,255);
             fill(255,255,255);
             text(votes[i], minX + (i * eachBoxWidth) + (eachBoxWidth/2), minY + (eachBoxHeight / 2));
@@ -98,13 +96,13 @@
             
           }
 
-          for (let id in clients){
-            let client = clients[id];
-            let mousePosition = client.mousePosition;
-            textAlign(CENTER);
-            textSize(32);
-            text("💖",mousePosition.x,mousePosition.y);
-          }
+          // for (let id in clients){
+          //   let client = clients[id];
+          //   let mousePosition = client.mousePosition;
+          //   textAlign(CENTER);
+          //   textSize(32);
+          //   text("💖",mousePosition.x,mousePosition.y);
+          // }
 
           // send updated vote every 10 frames
           if (frameCount % 10 === 0){
