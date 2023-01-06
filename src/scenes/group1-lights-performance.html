@@ -16,14 +16,7 @@
     <script src="../libs/socket.io.js"></script>
   </head>
   <body>
-    <audio
-    id="myAudioElement"
-          controls
-          autoplay
-          loop
-          style="display:none;"
-          src="">
-      </audio>
+
       <script>
         let mousePositions = {};
         let socket;
@@ -77,9 +70,30 @@
         if (frameCount % 180 === 0){
           if (winningVote !== prevWinningVote && winningVote !== -1){
             console.log('winner: ',winningVote);
-            const audioEl = document.getElementById('myAudioElement');
-            audioEl.src = `../assets/group1-music/${winningVote+1}.mp3`
-            audioEl.play();
+            // update lights to one of four states
+            let leftAddress = "L1";
+            let rightAddress = "L2";
+            if (winningVote === 0){
+              // LEFT LX
+              socket.emit('osc', `/${leftAddress}0`)
+              socket.emit('osc', `/${rightAddress}0`)
+            }
+            if (winningVote === 1){
+              // RIGHT LX
+              socket.emit('osc', `/${leftAddress}0`)
+              socket.emit('osc', `/${rightAddress}1`)
+            }
+            if (winningVote === 2){
+              // ON
+              socket.emit('osc', `/${leftAddress}1`)
+              socket.emit('osc', `/${rightAddress}1`)
+            }
+            if (winningVote === 3){
+              // OFF
+              socket.emit('osc', `/${leftAddress}0`)
+              socket.emit('osc', `/${rightAddress}0`)
+            }
+            
             prevWinningVote = winningVote;
           }
 
