@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+        overflow: hidden;
+        color:white;
+      }
+      #chatForm, #messages {
+        position:fixed;
+        left:50%;
+        margin-left:-400px;
+        width:800px;
+      }
+      #chatForm {
+        bottom: 10%;
+      }
+      #messages {
+        top: 5%;
+        max-height: 80%;
+        overflow-y:scroll;
+      }
+      #messages p {
+        font-size: 20px;
+      }
+      #messages p:nth-child(even) {
+        background-color: #bbb;
+      }
+      input {
+        width:80%;
+        /*margin-left: 10%;*/
+        height:28px;
+      }
+    </style>
+
+
+    <script src="../libs/socket.io.js"></script>
+  </head>
+  <body>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <div id="userList">
+      <div style="color:green" id="phone"></div>
+      <div style="color:red" id="refuse"></div>
+    </div>  
+    <div id ='messages'></div>
+      <div id='chatForm'>
+      <h4>Please enter your phone number</h4>
+      <input id="input_field" type="tel">
+      <button>Send</button>
+      </div>
+      <script>
+
+        // dream for the past
+        // dream for the present
+        // dream for the future
+
+        let socket;
+        let users;
+        let userListEl = document.getElementById('userList')
+        
+        let state ="dreampast"
+        // "dreampresent"
+        // "dreamfuture"
+        if (window.location.hostname === 'venue.itp.io') {
+          socket = io('https://venue.itp.io');
+        } else {
+          socket = io('http://localhost:3131');
+        }
+        document.getElementById("input_field").focus()
+        
+        document.addEventListener('keydown', (ev) => {
+          if(ev.key == "Enter"){
+            sendMsg()
+          }
+        })
+
+        window.addEventListener('load', function() {
+          $('#chatForm h4').text("Enter a dream for the past");
+        });
+
+        function sendMsg(){
+          let chatInput = document.getElementById("input_field")
+          if(state == "dreampast"){
+            $('#chatForm h4').text("Thank you.  Now enter a dream for the present");
+            state = "dreampresent";
+          } else if (state == "dreampresent") {
+            $('#chatForm h4').text("Thank you.  Now enter a dream for the future");
+            state = "dreamfuture";
+          } else {
+            $('#chatForm h4').text("Yummy!, you may proceed");
+            setTimeout(function() {
+              window.location("blender-audience.html");
+            }, 3000);
+          }
+
+          socket.emit("interaction", {
+            type: state+"-msg",
+            data: {msg: chatInput.value}
+          })
+          
+          chatInput.value = "";
+        }
+
+      </script>
+    </div>
+  </body>
+</html>
