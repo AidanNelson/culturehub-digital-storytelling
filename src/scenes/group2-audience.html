@@ -29,8 +29,7 @@
 
 <body>
     <script>
-        let lines = "";
-        let displayText = "";
+        let word = "";
         let bkCol = 255;
         let socket;
 
@@ -46,10 +45,6 @@
                 case "text":
                     // got text interaction
                     console.log(msg.data)
-                    displayText += msg.data;
-                    if (displayText.length > 100) {
-                        displayText = "";
-                    }
                     break;
             }
         })
@@ -63,11 +58,15 @@
 
         }
         function keyPressed() {
-            // lines = lines + key;
-            socket.emit("interaction", {
-                type: "text",
-                data: key
-            });
+            word = word + key;
+            if (keyCode == 32) {
+                socket.emit("interaction", {
+                    type: "text",
+                    data: word
+                });
+                word = "";
+            }
+
         }
 
     </script>
