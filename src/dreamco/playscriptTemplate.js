@@ -1,9 +1,9 @@
 let scriptTemplate = `
 A: I think I’ve been here before, I recognize that stretch of mountain, I’m…
 
-B: Everywhere we go, you always think you’ve been here before. Those aren’t mountains, those are #place#, you’re still convinced, after all this time. We’re here. Look around, look around at where we are right now. We’re #presentDream#
+B: Everywhere we go, you always think you’ve been here before. Those aren’t mountains, those are #place#, you’re still convinced, after all this time. We’re here. Look around, look around at where we are right now. We’re #dreampresent#
 
-A: Well, it feels more like #presentDream#
+A: Well, it feels more like #dreampresent#
 
 B: Well, it’s definitely not a place you’ve been before. 
 
@@ -35,9 +35,9 @@ B: No.
 B: Well, except —
 A is pouring them drinks from the blender as this continues — hands B a glass.
 
-I used to have this recurring dream where #pastDream#,
-and #pastDream#,
- and #pastDream#.
+I used to have this recurring dream where #dreampast#,
+and #dreampast#,
+ and #dreampast#.
 
 And everything was #color# — or maybe it was black and white? No, I think it was actually #color#.
 
@@ -57,11 +57,11 @@ A: I think it helps to imagine something else.
 
 B: Like?
 
-A: Like… #futureDream#
+A: Like… #dreamfuture#
 
-Or #futureDream#
+Or #dreamfuture#
 
-Or even #futureDream#
+Or even #dreamfuture#
 
 B: I don’t get it.
 
