@@ -68,6 +68,9 @@
             case "chatroom-refuse":
               $('#userList #refuse').append(`<p socketid="${msg.id}" onclick="changeScene('${msg.id}', '/scenes/marqueetest.html', '#images')">${msg.data.name}</p>`)
               break
+            case "update-user":
+              $(`[socketid=${msg.data.target}`).appendTo(msg.data.destination)
+              break
           }
         })
 
@@ -77,8 +80,7 @@
         })
         function changeScene(user, scene, destination){
             console.log(user, scene)
-            socket.emit('sendIndividualSceneChange', {target:user, url:scene})
-            $(`[socketid=${user}`).appendTo(destination)
+            socket.emit('sendIndividualSceneChange', {target:user, url:scene, destination:destination})
             // socket.emit('sceneIdx', sceneSelect.value);
         }
 
