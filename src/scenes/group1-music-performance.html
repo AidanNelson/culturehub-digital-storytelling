@@ -41,6 +41,14 @@
           src="../assets/group1-music/4.mp3">
       </audio>
       <script>
+
+
+       let myImg;
+         function preload(){
+           myImg=loadImage("../assets/group1-backgrounds/forrest.jpg");
+           
+         }
+
         let mousePositions = {};
         let socket;
         if (window.location.hostname === 'venue.itp.io') {
@@ -84,6 +92,7 @@
         }
         function draw(){
           background(0);
+          image(myImg,0,0,window.innerWidth,window.innerHeight);
 
           if (frameCount % 5 === 0){
            tallyVotes();
