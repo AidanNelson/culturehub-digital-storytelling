@@ -1,4 +1,34 @@
-var socket = io();
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+        overflow: hidden;
+      }
+      #mainContainer {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0px;
+        left: 0px;
+        background-color: #ff0000cc;
+      }
+    </style>
+
+    <script src="../libs/p5.js"></script>
+    <script src="../libs/p5.sound.min.js"></script>
+    <script src="../libs/p5.speech.js"></script>
+    <script src="../libs/socket.io.js"></script>
+  </head>
+  <body>
+      <script>
+        console.log('in iframe')
+        //navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+
+        var socket = io();
 let questions=["Which mountains do you travel when you go to sleep?","Which sidewalk looks the most familiar to you?","What is the house of your dreams?","What clouds make you feel at home?"];
 
 let q_index=3;
@@ -28,12 +58,15 @@ function setup() {
   submit = createButton('verify');
   submit.position((width-w)/2+w-60, (height-h)/2+h-30);
   submit.mousePressed(submitted);
-  textSize(14);
+  textSize(20);
   skin();
 
+  socket.emit('getimagenum',"");
 }
 
 function draw() {
+  skin();
+
 }
 
 function skin(){
@@ -53,8 +86,13 @@ function skin(){
 }
 function loadImages(){
   for (let i=0;i<9;i++){
-      images[i]=loadImage('../images/'+q_index+'/'+i+".jpg")
+    console.log('/images/'+q_index+'/'+i+".jpg");
+      images[i]=loadImage('/images/'+q_index+'/'+i+".jpg", imageLoaded);
   }
+}
+
+function imageLoaded() {
+  console.log("soemthing");
 }
 
 function showImages(h,w){
@@ -125,8 +163,11 @@ function submitted(){
   for(let i=0;i<9;i++){
     if(img_selection[i]){
       console.log("selected")
-      let msg={'promt':socket_text,'captcha_select':i}
+      let msg={imagenum: q_index,'captcha_select':i}
       socket.emit("data",msg)
+      setTimeout(function() {
+        location.href = "blender-audience.html";
+      }, 1000);
     }
   }
 }
@@ -137,10 +178,15 @@ socket.on("data", function (data) {
   console.log(data)
 });
 
-socket.on("server_prompt", function (data) {
+socket.on("imagenum", function (data) {
+  console.log(data);
   q_index=data;
   socket_text=questions[data];
   loadImages();
   skin();//skin just redraws the captcha with the prompt and images
 
 });
+      </script>
+    </div>
+  </body>
+</html>
