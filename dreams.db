@@ -6,3 +6,6 @@
 {"type":"person","dream":"My partner\n","_id":"lLoXAjvj80yvm35y","createdAt":{"$$date":1673039650608},"updatedAt":{"$$date":1673039650608}}
 {"type":"place","dream":"Nepal","_id":"sIvnz1PmyKFbRNJh","createdAt":{"$$date":1673039659841},"updatedAt":{"$$date":1673039659841}}
 {"type":"color","dream":"Green","_id":"sy9B2n5h4gFZCezB","createdAt":{"$$date":1673039668943},"updatedAt":{"$$date":1673039668943}}
+{"type":"dreampast","dream":"cat","_id":"G4BhFX9QyL8tKDmU","createdAt":{"$$date":1673043704378},"updatedAt":{"$$date":1673043704378}}
+{"type":"dreampresent","dream":"dog","_id":"Cr4wUnMWccJ1C7g9","createdAt":{"$$date":1673043706397},"updatedAt":{"$$date":1673043706397}}
+{"type":"dreamfuture","dream":"lemon","_id":"gbwXiXWhEy525PZq","createdAt":{"$$date":1673043707698},"updatedAt":{"$$date":1673043707698}}

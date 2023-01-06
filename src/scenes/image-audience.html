@@ -28,7 +28,12 @@
         console.log('in iframe')
         //navigator.mediaDevices.getUserMedia({ audio: true, video: true })
 
-        var socket = io();
+        var socket
+        if (window.location.hostname === 'venue.itp.io') {
+          socket = io('https://venue.itp.io');
+        } else {
+          socket = io('http://localhost:3131');
+        }
 let questions=["Which mountains do you travel when you go to sleep?","Which sidewalk looks the most familiar to you?","What is the house of your dreams?","What clouds make you feel at home?"];
 
 let q_index=3;

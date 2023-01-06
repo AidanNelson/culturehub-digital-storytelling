@@ -6,7 +6,6 @@
       body {
         margin: 20px;
         padding: 0px;
-        overflow: hidden;
         color:black;
       }
       #container {
@@ -44,7 +43,9 @@
         <div class="box" id="dreamwriting">
             <h4>Dream Writing</h4>
         </div>
-
+        <div class="box" id="blender">
+          <h4>Blender</h4>
+      </div>
         <div class="box" id="theater">
             <h4>Dream Theater</h4><button id="openDreamTheater">Begin</button>
         </div>
@@ -79,7 +80,7 @@
 
         $('#openDreamTheater').click(function(){
             $('[socketid]').appendTo('#theater')
-            socket.emit('sceneIdx', 'body')
+            socket.emit('sceneIdx', 'final')
         })
         function changeScene(user, element){
             console.log(element)
@@ -102,7 +103,7 @@
             }
             // console.log(user, scene)
             socket.emit("interaction", {type:"update-user", data:{destination:destination, target:user}})
-            socket.emit('sendIndividualSceneChange', {target:user, url:scene, destination:destination})
+            socket.emit('sendIndividualSceneChange', {target:user, url:url, destination:destination})
             // socket.emit('sceneIdx', sceneSelect.value);
         }
 
