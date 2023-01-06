@@ -27,8 +27,8 @@
         // http://natureofcode.com
 
         // Example 1-1: Bouncing Ball, no vectors
-        let x = 500;
-        let y = 500;
+        let x = 200;
+        let y = 100;
         let xspeed = 2.5;
         let yspeed = 2;
 
@@ -37,7 +37,7 @@
           // background(51);
 
           clear();
-          textSize(64);
+          textSize(32);
           textAlign(CENTER);
           fill(255);
           
@@ -46,10 +46,10 @@
           x = x + xspeed;
           y = y + yspeed;
 
-          if ((x > width - 250) || (x < 250)) {
+          if ((x > width) || (x < 0)) {
             xspeed = xspeed * -1;
           }
-          if ((y > height - 100) || (y < 100)) {
+          if ((y > height ) || (y < 0)) {
             yspeed = yspeed * -1;
           }
 
@@ -57,7 +57,7 @@
           stroke(0);
           strokeWeight(2);
           fill(255);
-          text("CALL ME @ XXX-XXX-XXXX!",x,y);
+          text("CALL ME @ (347) 674-9838!",x,y);
         }
       </script>
     </div>
