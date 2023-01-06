@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      html,
+      body {
+        margin: 20px;
+        padding: 0px;
+        overflow: scroll;
+        color:black;
+      }
+    </style>
+
+
+    <script src="../libs/socket.io.js"></script>
+    <script src="tracery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="playscriptTemplate.js"></script>
+  </head>
+  <body>
+    <button onclick="generateScript()">Generate</button>
+    <div id="container">
+        <pre></pre>
+    </div>
+      <script>
+        let socket;
+        let grammarObj = {
+            "place": ["SEARS"],
+            "person":["Todd"],
+            "sound":["airhorn"],
+            "lovedOne":["Mom"],
+            "color":["blue"],
+            "whatIsADream":["a star"],
+            "pastDream":["we will forget"],
+            "presentDream": ["being a gundam"],
+            "futureDream":["the sea covers us all"],
+            "scriptTemplate":[scriptTemplate]
+        }
+        let grammar = tracery.createGrammar(grammarObj);
+
+        if (window.location.hostname === 'venue.itp.io') {
+          socket = io('https://venue.itp.io');
+        } else {
+          socket = io('http://localhost:3131');
+        }
+        function generateScript(){
+          let script = grammar.flatten("#scriptTemplate#")
+        console.log(script)
+        $('pre').text(script)
+        }
+      </script>
+    </div>
+  </body>
+</html>

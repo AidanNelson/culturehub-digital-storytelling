@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      html,
+      body {
+        margin: 20px;
+        padding: 0px;
+        overflow: hidden;
+        color:black;
+      }
+      #container {
+          display:flex;
+          flex-wrap: wrap;
+      }
+      .box {
+          border: 1px solid black;
+          padding: 20px;
+          margin:20px;
+          min-width: 250px;
+          min-height:150px;
+      }
+    </style>
+
+
+    <script src="../libs/socket.io.js"></script>
+  </head>
+  <body>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <div id="container">
+        <div class="box" id="userList">
+            <h4>Entrance Room</h4>
+        <p>To Call List</p>
+        <div style="color:green" id="phone"></div>
+        <p>Refusal List</p>
+        <div style="color:red" id="refuse"></div>
+        </div>  
+        <div class="box" id="images">
+            <h4>Image Classification</h4>
+        </div>
+        <div class="box" id="dreamwriting">
+            <h4>Dream Writing</h4>
+        </div>
+
+        <div class="box" id="theater">
+            <h4>Dream Theater</h4><button id="openDreamTheater">Begin</button>
+        </div>
+    </div>
+      <script>
+        let socket;
+        let users;
+        let userListEl = document.getElementById('userList')
+        if (window.location.hostname === 'venue.itp.io') {
+          socket = io('https://venue.itp.io');
+        } else {
+          socket = io('http://localhost:3131');
+        }
+        socket.on('interaction', (msg) => {
+          console.log('got interaction msg: ',msg);
+
+          switch (msg.type) {
+            case "chatroom-msg":
+              document.getElementById("messages").innerHTML += `<h4><strong>${msg.id}:</strong>${msg.data.msg}</h4>`
+              break;
+            case "chatroom-phone":
+              $('#userList #phone').append(`<p socketid="${msg.id}" onclick="changeScene('${msg.id}', '/scenes/marqueetest.html', '#dreamwriting')"><strong>${msg.name}:</strong> ${msg.data.phone}</p>`)
+              break
+            case "chatroom-refuse":
+              $('#userList #refuse').append(`<p socketid="${msg.id}" onclick="changeScene('${msg.id}', '/scenes/marqueetest.html', '#images')">${msg.data.name}</p>`)
+              break
+          }
+        })
+
+        $('#openDreamTheater').click(function(){
+            $('[socketid]').appendTo('#theater')
+            socket.emit('sceneIdx', 'body')
+        })
+        function changeScene(user, scene, destination){
+            console.log(user, scene)
+            socket.emit('sendIndividualSceneChange', {target:user, url:scene})
+            $(`[socketid=${user}`).appendTo(destination)
+            // socket.emit('sceneIdx', sceneSelect.value);
+        }
+
+      </script>
+    </div>
+  </body>
+</html>
