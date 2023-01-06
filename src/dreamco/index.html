@@ -4,36 +4,12 @@
     <style>
       html,
       body {
-        margin: 0px;
+        margin: 20px;
         padding: 0px;
         overflow: hidden;
         color:white;
       }
-      #chatForm, #messages {
-        position:fixed;
-        left:50%;
-        margin-left:-400px;
-        width:800px;
-      }
-      #chatForm {
-        bottom: 10%;
-      }
-      #messages {
-        top: 5%;
-        max-height: 80%;
-        overflow-y:scroll;
-      }
-      #messages p {
-        font-size: 20px;
-      }
-      #messages p:nth-child(even) {
-        background-color: #bbb;
-      }
-      input {
-        width:80%;
-        /*margin-left: 10%;*/
-        height:28px;
-      }
+      
     </style>
 
 
@@ -62,10 +38,10 @@
               document.getElementById("messages").innerHTML += `<h4><strong>${msg.id}:</strong>${msg.data.msg}</h4>`
               break;
             case "chatroom-phone":
-              $('#userList #phone').append(`<p><strong>${msg.id}:</strong> ${msg.data.phone}</p>`)
+              $('#userList #phone').append(`<p><strong>${msg.name}:</strong> ${msg.data.phone}</p>`)
               break
             case "chatroom-refuse":
-              $('#userList #refuse').append(`<p>${msg.id}</p>`)
+              $('#userList #refuse').append(`<p onclick="changeScene(this)">${msg.data.name}</p>`)
               break
           }
         })
@@ -74,7 +50,9 @@
         })
 
 
-
+        function changeScene(user){
+            // socket.emit('sceneIdx', sceneSelect.value);
+        }
         // class for falling keys
 
       </script>
