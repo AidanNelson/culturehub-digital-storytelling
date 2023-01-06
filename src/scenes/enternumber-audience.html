@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+        overflow: hidden;
+      }
+      #mainContainer {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0px;
+        left: 0px;
+        background-color: #ff0000cc;
+      }
+    </style>
+
+    <script src="../libs/p5.js"></script>
+    <script src="../libs/p5.sound.min.js"></script>
+    <script src="../libs/p5.speech.js"></script>
+    <script src="../libs/socket.io.js"></script>
+  </head>
+  <body>
+      <script>
+        console.log('in iframe')
+        //navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+
+        let socket;
+        let phone;
+        let go;
+
+        let ENTER = 0;
+        let THANKYOU = 1;
+  
+        let screen = 0;
+        
+        function setup(){
+          socket = io();
+          createCanvas(windowWidth, windowHeight);
+  
+          phone = createInput("212-555-1212");
+          phone.input(phoneEntered);
+  
+          go = createButton("Enter");
+          go.mousePressed(phoneEntered);
+
+          phone.position(width/2 - 100,100);
+          go.position(width/2,100);
+        }
+
+        function phoneEntered() {
+          socket.emit('phone',phone.value());
+          phone.hide();
+          go.hide();
+          screen = THANKYOU;
+        }
+
+        function mousePressed() {
+          
+        }
+
+        function secret() {
+
+        }
+
+        function draw(){
+          clear();
+          if (screen == ENTER) {
+            fill(255,0,255);
+            textSize(20);
+            textAlign(CENTER);
+            rectMode(CENTER);
+            textWrap(WORD, width-50);
+            text("Enter your phone number", width/2, 100);
+          } else if (screen == THANKYOU) {
+            fill(255,0,255);
+            textSize(20);
+            textAlign(CENTER);
+            rectMode(CENTER);
+            textWrap(WORD, width-50);
+            text("Thank you, please wait for us to get in touch", width/2, 100);
+          }
+        }
+      </script>
+    </div>
+  </body>
+</html>
