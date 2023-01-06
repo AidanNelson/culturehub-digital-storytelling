@@ -155,24 +155,34 @@ async function main() {
         });
     });
 
+    socket.on('operatordream',function(data) {
+      dreams.push(data);        
+      dreamsdb.insert(data);
+      io.emit('dream', data.dream);
+    });
+
     // Perhaps create a generic type
     socket.on('data', (message) => {
       console.log(message);
       io.emit('data', message);
 
-      if (message.dreampast) {
-        dreams.push({past: message.dreampast});
-        dreamsdb.insert({past: message.dreampast});
-        io.emit('dream',message.dreampast);
-      } else if (message.dreampresent) {
-        dreams.push({present: message.dreampresent});
-        dreamsdb.insert({present: message.dreampresent});
-        io.emit('dream',message.dreampresent);
-      } else if (message.dreamfuture) {
-        dreams.push({future: message.dreamfuture});
-        dreamsdb.insert({future: message.dreamfuture});
-        io.emit('dream',message.dreamfuture);
-      }
+      dreams.push(message);
+      dreamsdb.insert(message);
+      io.emit('dream', message.dream);
+
+      // if (message.dreampast) {
+      //   dreams.push({past: message.dreampast});
+      //   dreamsdb.insert({past: message.dreampast});
+      //   io.emit('dream',message.dreampast);
+      // } else if (message.dreampresent) {
+      //   dreams.push({present: message.dreampresent});
+      //   dreamsdb.insert({present: message.dreampresent});
+      //   io.emit('dream',message.dreampresent);
+      // } else if (message.dreamfuture) {
+      //   dreams.push({future: message.dreamfuture});
+      //   dreamsdb.insert({future: message.dreamfuture});
+      //   io.emit('dream',message.dreamfuture);
+      // }
 
     });
 

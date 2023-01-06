@@ -1,7 +1,7 @@
 const availableScenes = [
-  'enterdream',
   'intro',
+  'chatroom',  
+  'enterdream',
   'blending',
-  'final',
-  'chatroom'  
+  'final'
 ]

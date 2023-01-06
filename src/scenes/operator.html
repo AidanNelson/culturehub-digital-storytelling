@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+        overflow: hidden;
+      }
+      #mainContainer {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0px;
+        left: 0px;
+        background-color: #ff0000cc;
+      }
+    </style>
+
+    <script src="../libs/p5.js"></script>
+    <script src="../libs/p5.sound.min.js"></script>
+    <script src="../libs/p5.speech.js"></script>
+    <script src="../libs/socket.io.js"></script>
+  </head>
+  <body>
+    <div>
+      <script>
+        let socket;
+        let type;
+        let dream;
+        let sub;
+
+        function setup(){
+          socket = io();
+          type = select("#type");
+          dream = select("#dream");
+          sub = select("#sub");
+          sub.mousePressed(submit);
+        }
+
+        function submit() {
+          socket.emit('operatordream',{type: type.value(), dream: dream.value()});
+        }
+
+        function draw(){
+        }
+      </script>
+    </div>
+    <div>
+      <form>
+        <select id="type">
+          <option value="person">What person in your life makes the most appearances in your dreams?</option>
+          <option value="place">Where was the last place you visited in your dreams?</option>
+          <option value="color">When you close your eyes, what color do you see?</option>
+          <option value="sound">When you close your eyes, what sounds do you hear?</option>
+          <option value="lovedOne">Picture someone you love. Whose face do you see?</option>
+          <option value="whatIsADream">What is a dream?</option>
+        </select>
+        <br />
+        <textarea id="dream" cols="80" rows="30"></textarea>
+        <br >
+        <button id="sub">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>
