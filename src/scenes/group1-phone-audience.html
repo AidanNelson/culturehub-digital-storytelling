@@ -21,12 +21,43 @@
           createCanvas(windowWidth, windowHeight);
 
         }
-        function draw(){
-          
+    
+        // The Nature of Code
+        // Daniel Shiffman
+        // http://natureofcode.com
+
+        // Example 1-1: Bouncing Ball, no vectors
+        let x = 500;
+        let y = 500;
+        let xspeed = 2.5;
+        let yspeed = 2;
+
+
+        function draw() {
+          // background(51);
+
           clear();
-          textSize(16);
+          textSize(64);
+          textAlign(CENTER);
           fill(255);
-          text("Call me at XXX-XXX-XXXX!",20,20);
+          
+                    // 
+          // Add the current speed to the position.
+          x = x + xspeed;
+          y = y + yspeed;
+
+          if ((x > width - 250) || (x < 250)) {
+            xspeed = xspeed * -1;
+          }
+          if ((y > height - 100) || (y < 100)) {
+            yspeed = yspeed * -1;
+          }
+
+          // Display circle at x position
+          stroke(0);
+          strokeWeight(2);
+          fill(255);
+          text("CALL ME @ XXX-XXX-XXXX!",x,y);
         }
       </script>
     </div>
