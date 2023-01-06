@@ -1,4 +1,5 @@
 const availableScenes = [
+  'group2',
   'simpleExample',
   'mouseExample',
   'textExample',
