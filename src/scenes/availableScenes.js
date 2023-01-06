@@ -10,4 +10,5 @@ const availableScenes = [
   'speech',
   'body',
   'audienceMedia',
+  'group1-music',
 ];
