@@ -78,19 +78,19 @@
         })
 
         window.addEventListener('load', function() {
-          $('#chatForm h4').text("Enter a dream for the past");
+          $('#chatForm h4').text("Describe the last thing you remember doing in a dream.");
           $('#send').click(sendMsg);
         });
 
         function sendMsg(){
           let chatInput = document.getElementById("input_field")
           if(state == "dreampast"){
-            $('#chatForm h4').text("Thank you.  Now enter a dream for the present");
+            $('#chatForm h4').text("Thank you.  Where’s somewhere you’ve always dreamt of going?");
             state = "dreampresent";
             socket.emit("data", {type: "dreampast", dream: chatInput.value});
             
           } else if (state == "dreampresent") {
-            $('#chatForm h4').text("Thank you.  Now enter a dream for the future");
+            $('#chatForm h4').text("Thank you.  What’s something you’ve only seen in a dream?");
             state = "dreamfuture";
 
             socket.emit("data", {type: "dreampresent", dream: chatInput.value});
@@ -98,7 +98,7 @@
           } else {
             socket.emit("data", {type: "dreamfuture", dream: chatInput.value});
 
-            $('#chatForm h4').text("Yummy!, you may proceed");
+            $('#chatForm h4').text("Your offerings will be integrated into the collective dream. You may proceed");
             setTimeout(function() {
               window.location.href = "blender-audience.html";
             }, 3000);

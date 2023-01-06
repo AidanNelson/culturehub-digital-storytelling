@@ -31,7 +31,13 @@
         let socket;
         
         function setup(){
-          socket = io();
+          if (window.location.hostname === 'venue.itp.io') {
+            socket = io('https://venue.itp.io');
+          } else {
+            socket = io('http://localhost:3131');
+          }
+          socket.emit("interaction", {type:"update-user", data:{destination:"#blender", target:socket.id}})
+
           createCanvas(windowWidth, windowHeight);
         }
 
