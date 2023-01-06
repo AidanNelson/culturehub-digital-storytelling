@@ -11,6 +11,14 @@ let clients = {};
 let adminMessage = '';
 let sceneId = null; // start at no scene
 let shouldShowChat = false;
+let imagenum = 0;
+
+let images = {
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3
+};
 
 async function main() {
   const app = express();
@@ -99,6 +107,16 @@ async function main() {
       socket.to(data.target).emit('changeScene', data.url)
     })
 
+    socket.on('getimagenum', (data) => {
+        socket.emit('imagenum',(imagenum%4));
+        imagenum++;
+      }
+    );
+
+    socket.on('getimages', function() {
+      socket.emit('background_img', images);
+    });
+
     // Add a user name
     socket.on('name', (data) => {
       clients[socket.id].name = data;
@@ -156,6 +174,7 @@ async function main() {
     });
 
     socket.on('operatordream',function(data) {
+      console.log(data);
       dreams.push(data);        
       dreamsdb.insert(data);
       io.emit('dream', data.dream);
@@ -166,9 +185,18 @@ async function main() {
       console.log(message);
       io.emit('data', message);
 
-      dreams.push(message);
-      dreamsdb.insert(message);
-      io.emit('dream', message.dream);
+      if (message.dream) {
+
+        dreams.push(message);
+        dreamsdb.insert(message);
+        io.emit('dream', message.dream);
+
+      }
+
+      if (message.captcha_select) {
+        images[message.imagenum] = message.captcha_select;
+        console.log(images);
+      }
 
       // if (message.dreampast) {
       //   dreams.push({past: message.dreampast});

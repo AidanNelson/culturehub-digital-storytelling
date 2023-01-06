@@ -39,16 +39,7 @@
             console.log(data);
             //dreams = data;
             for (var i = 0; i < data.length; i++) {
-              if (data[i].present) {
-                dreams.push({x:width/2,y:0-100*i,dream:data[i].present});
-
-              } else if (data[i].past) {
-                dreams.push({x:width/2,y:0-100*i,dream:data[i].past});
-
-              } else if (data[i].future) {
-                dreams.push({x:width/2,y:0-100*i,dream:data[i].future});
-
-              }
+              dreams.push({x:width/2,y:0-100*i,dream:data[i].dream});
             }
           });
           socket.on('dream', function(data) {
