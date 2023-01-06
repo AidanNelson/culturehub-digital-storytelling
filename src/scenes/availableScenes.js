@@ -3,7 +3,9 @@ const availableScenes = [
   'enternumber',
   'sorting',
   'blending',
-  'final'
+  'final',
+  'body',
+  'chatroom'  
   /*'simpleExample',
   'mouseExample',
   'textExample',
@@ -13,5 +15,4 @@ const availableScenes = [
   'socket',
   'multipleusers',
   'speech',
-  'body'*/
 ];

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+        overflow: hidden;
+        color:white;
+      }
+      #chatForm, #messages {
+        position:fixed;
+        left:50%;
+        margin-left:-400px;
+        width:800px;
+      }
+      #chatForm {
+        bottom: 10%;
+      }
+      #messages {
+        top: 5%;
+        max-height: 80%;
+        overflow-y:scroll;
+      }
+      #messages p {
+        font-size: 20px;
+      }
+      #messages p:nth-child(even) {
+        background-color: #bbb;
+      }
+      input {
+        width:80%;
+        /*margin-left: 10%;*/
+        height:28px;
+      }
+    </style>
+
+
+    <script src="../libs/socket.io.js"></script>
+  </head>
+  <body>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <div id="userList">
+      <div style="color:green" id="phone"></div>
+      <div style="color:red" id="refuse"></div>
+    </div>  
+    <div id ='messages'></div>
+      <div id='chatForm'>
+      <h4>Please enter your phone number</h4>
+      <input id="input_field" type="tel">
+      <button>Send</button>
+      </div>
+      <script>
+        let socket;
+        let users;
+        let userListEl = document.getElementById('userList')
+        let state ="phonenumber"
+        if (window.location.hostname === 'venue.itp.io') {
+          socket = io('https://venue.itp.io');
+        } else {
+          socket = io('http://localhost:3131');
+        }
+        document.getElementById("input_field").focus()
+        socket.on('interaction', (msg) => {
+          console.log('got interaction msg: ',msg);
+
+          switch (msg.type) {
+            case "chatroom-msg":
+              document.getElementById("messages").innerHTML += `<h4><strong>${msg.id}:</strong>${msg.data.msg}</h4>`
+              break;
+            case "chatroom-phone":
+              $('#userList #phone').append(`<p>${msg.id}</p>`)
+              break
+            case "chatroom-refuse":
+              $('#userList #refuse').append(`<p>${msg.id}</p>`)
+              break
+          }
+        })
+        socket.on("userPositions", (data)=> {
+          users = {...users, data};
+        })
+
+        document.addEventListener('keydown', (ev) => {
+          if(ev.key == "Enter"){
+            sendMsg()
+          }
+        })
+
+        function sendMsg(){
+          let chatInput = document.getElementById("input_field")
+          if(state = "phonenumber"){
+            let validPhone = chatInput.value.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)
+            if(validPhone){
+              socket.emit("interaction", {
+                  type: "chatroom-phone",
+                  data: {"phone": chatInput.value}
+              })
+              $('#chatForm h4').text("An operator will be with you shortly. In the meantime you may chat with your fellow dreamers")
+              state = "chat"
+            }
+            else if(chatInput.value.includes("I REFUSE")){
+              socket.emit("interaction", {
+                  type: "chatroom-refuse",
+                  data: {}
+              })
+              $('#chatForm h4').text("Your refusal is acknowledged and respected. Please wait for a unique opportunity to be provided for you")
+              state = "chat"
+            }
+            else {
+              $('#chatForm h4').text("Please use a real phone number, or type I REFUSE").css("color", "red")
+            }
+          }
+          else if(state = "chat"){
+            socket.emit("interaction", {
+              type: "chatroom-msg",
+              data: {msg: chatInput.value}
+             })
+          }
+          chatInput.value = ""
+
+
+
+        }
+
+        function changeScene(user){
+          console.log(user.innerHTML)
+        }
+
+
+
+        // class for falling keys
+
+      </script>
+    </div>
+  </body>
+</html>
