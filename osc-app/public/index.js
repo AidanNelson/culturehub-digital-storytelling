@@ -11,6 +11,7 @@ async function main() {
   if (oscIP) document.getElementById('osc-server-input').value = oscIP;
   let oscPort = ls.getItem('oscport');
   if (oscIP) document.getElementById('osc-server-port-input').value = oscPort;
+
   let socketip = ls.getItem('socketip');
   if (socketip) document.getElementById('socket-server-input').value = socketip;
 

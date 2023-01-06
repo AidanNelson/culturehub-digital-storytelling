@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+        overflow: hidden;
+      }
+    </style>
+
+    <script src="../libs/p5.js"></script>
+    <script src="../libs/p5.sound.min.js"></script>
+    <script src="../libs/p5.speech.js"></script>
+    <script src="../libs/socket.io.js"></script>
+  </head>
+  <body>
+      <script>
+        function setup(){
+          createCanvas(windowWidth, windowHeight);
+
+        }
+    
+        // The Nature of Code
+        // Daniel Shiffman
+        // http://natureofcode.com
+
+        // Example 1-1: Bouncing Ball, no vectors
+        let x = 500;
+        let y = 500;
+        let xspeed = 2.5;
+        let yspeed = 2;
+
+
+        function draw() {
+          // background(51);
+
+          clear();
+          textSize(64);
+          textAlign(CENTER);
+          fill(255);
+          
+                    // 
+          // Add the current speed to the position.
+          x = x + xspeed;
+          y = y + yspeed;
+
+          if ((x > width - 250) || (x < 250)) {
+            xspeed = xspeed * -1;
+          }
+          if ((y > height - 100) || (y < 100)) {
+            yspeed = yspeed * -1;
+          }
+
+          // Display circle at x position
+          stroke(0);
+          strokeWeight(2);
+          fill(255);
+          text("CALL ME @ XXX-XXX-XXXX!",x,y);
+        }
+      </script>
+    </div>
+  </body>
+</html>
