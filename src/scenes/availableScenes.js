@@ -1,5 +1,10 @@
 const availableScenes = [
-  'simpleExample',
+  'intro',
+  'enternumber',
+  'sorting',
+  'blending',
+  'final'
+  /*'simpleExample',
   'mouseExample',
   'textExample',
   'speechExample',
@@ -8,5 +13,5 @@ const availableScenes = [
   'socket',
   'multipleusers',
   'speech',
-  'body',
+  'body'*/
 ];

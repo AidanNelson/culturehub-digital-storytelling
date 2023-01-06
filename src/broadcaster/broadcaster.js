@@ -11,9 +11,9 @@ let audioEncodings = [{ maxBitrate: 256000 }]
 
 async function startBroadcast() {
   let videoTrack = localCam.getVideoTracks()[0]
-  mediasoupPeer.addTrack(videoTrack, 'video-broadcast', true, videoEncodings)
+  mediasoupPeer.addTrack(videoTrack, sceneSelect.value + '-video-broadcast', true, videoEncodings)
   let audioTrack = localCam.getAudioTracks()[0]
-  mediasoupPeer.addTrack(audioTrack, 'audio-broadcast', true, audioEncodings)
+  mediasoupPeer.addTrack(audioTrack, sceneSelect.value + '-audio-broadcast', true, audioEncodings)
 }
 
 async function main() {
@@ -41,6 +41,14 @@ async function main() {
     },
     false
   )
+
+  let sceneSelect = document.getElementById('sceneSelect');
+  for (let i = 0; i < availableScenes.length; i++) {
+    let sceneName = availableScenes[i];
+    const option = document.createElement('option');
+    option.innerText = sceneName;
+    sceneSelect.appendChild(option);
+  }  
 }
 
 main()
