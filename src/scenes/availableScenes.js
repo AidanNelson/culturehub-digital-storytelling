@@ -12,9 +12,8 @@ const availableScenes = [
   'audienceMedia',
   'group1-woods',
   'group1-music',
-  'group1-background',
-  'group1-lights',
-  'group1-glitch',
   'group1-phone',
+  'group1-background',
+  'group1-glitch',
   'group1-blackout',
 ];
