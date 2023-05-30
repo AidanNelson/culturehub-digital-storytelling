@@ -12,6 +12,26 @@
       padding: 0px;
       overflow: hidden;
     }
+    #buttonOverlay {
+      position: absolute;
+      margin-left: 50vw;
+      top: 50vh;
+      padding: 0px;
+      transform: translateX(-50%) translateY(-50%);
+      z-index: 10;
+    }
+    #startButton {
+      color: white;
+      background-color: black;
+      box-shadow: 5px 5px 5px white;
+      /* width: 100px;
+      height: 50px; */
+      padding: 1em;
+      z-index: 10;
+      border: 1px solid white;
+      font-size: 2em;
+    }
+
     #broadcastVideoContainer {
       width: 100vw;
       height: 100vh;
@@ -35,20 +55,10 @@
   </style>
 
   <body>
-    <div
-      style="
-        position: absolute;
-        margin-left: 50vw;
-        top: 50vh;
-        padding: 0px;
-        transform: translateX(-50%) translateY(-50%);
-        z-index: 10;
-      "
-    >
-      <button id="startButton" style="width: 100px; height: 50px; z-index: 10">
-        Enter
-      </button>
+    <div id="buttonOverlay">
+      <button id="startButton">Welcome, Traveler</button>
     </div>
+
     <iframe id="sceneContainer"></iframe>
 
     <div id="broadcastVideoContainer">
@@ -58,6 +68,7 @@
 
     <script src="../libs/SimpleMediasoupPeer.js"></script>
     <script src="../libs/socket.io.js"></script>
+    <script src="../libs/gsap.min.js"></script>
     <script type="module" src="./audience.js"></script>
   </body>
 </html>

@@ -94,3 +94,24 @@ function gotTrack(track, id, label) {
     });
   };
 }
+
+//
+
+function fadeBackgroundToColor(newColor, cueDurationInSeconds) {
+  const el = document.getElementById('broadcastVideoContainer');
+  console.log('changing background of ', el);
+  console.log('gsap:', gsap);
+  gsap.to('body', {
+    duration: cueDurationInSeconds, // Animation duration (in seconds)
+    backgroundColor: newColor, // Target color
+  });
+}
+
+function setBGColor(newColor) {
+  fadeBackgroundToColor(newColor, 0);
+}
+
+document.addEventListener('click', () => {
+  fadeBackgroundToColor(`#ff0000`, 10);
+  // setBGColor('pink');
+});
