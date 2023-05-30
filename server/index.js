@@ -1,8 +1,8 @@
 // HTTP Server setup:
 // https://stackoverflow.com/questions/27393705/how-to-resolve-a-socket-io-404-not-found-error
 const express = require('express');
-// const https = require("https");
-const http = require('http');
+const https = require('https');
+// const http = require('http');
 const Datastore = require('nedb');
 const MediasoupManager = require('simple-mediasoup-peer-server');
 
@@ -14,7 +14,13 @@ let shouldShowChat = false;
 async function main() {
   const app = express();
 
-  const server = http.createServer(app);
+  const privateKey = fs.readFileSync('./certs/key.pem', 'utf8');
+  const certificate = fs.readFileSync('./certs/cert.pem', 'utf8');
+  const ssl = {
+    key: privateKey,
+    cert: certificate,
+  };
+  const server = https.createServer(ssl, app);
 
   const distFolder = process.cwd() + '/src';
   console.log('Serving static files at ', distFolder);
