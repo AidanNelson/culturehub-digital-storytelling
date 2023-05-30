@@ -15,8 +15,8 @@ let shouldShowChat = false;
 async function main() {
   const app = express();
 
-  const privateKey = fs.readFileSync('./certs/key.pem', 'utf8');
-  const certificate = fs.readFileSync('./certs/cert.pem', 'utf8');
+  const privateKey = fs.readFileSync('./server/certs/key.pem', 'utf8');
+  const certificate = fs.readFileSync('./server/certs/cert.pem', 'utf8');
   const ssl = {
     key: privateKey,
     cert: certificate,
