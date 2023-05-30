@@ -6,8 +6,8 @@ let sceneSwitcherButtons = {};
 function setup() {
   console.log('Setting up socket connection');
 
-  if (window.location.hostname === 'venue.itp.io') {
-    socket = io('https://venue.itp.io');
+  if (window.location.hostname === 'prometheus.livelab.app') {
+    socket = io('https://prometheus.livelab.app');
   } else {
     socket = io('http://localhost:3131');
   }

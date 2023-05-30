@@ -19,8 +19,8 @@ function init() {
   // hack to prevent issue where we've been scrolled below content...
   window.scrollTo(0, 0);
 
-  if (window.location.hostname === 'venue.itp.io') {
-    socket = io('https://venue.itp.io');
+  if (window.location.hostname === 'prometheus.livelab.app') {
+    socket = io('https://prometheus.livelab.app');
   } else {
     socket = io('http://localhost:3131');
   }
