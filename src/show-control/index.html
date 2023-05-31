@@ -9,8 +9,16 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="../libs/coloris.min.css" />
+    <script src="../libs/coloris.min.js"></script>
 
     <style>
+      html, body{
+        margin: 0px;
+        padding: 0px;
+        background-color: black;
+        color:white;
+      }
       .activeButton {
         border: 10px solid red;
       }
@@ -19,6 +27,14 @@
         width: 100%;
         height: 100%;
       }
+      #colorInput {
+        width: 150px;
+        height:50px;
+      }
+      #transitionTimeInput{
+        width: 50px;
+        height: 50px;
+      }
     </style>
   </head>
 
@@ -26,11 +42,29 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-8">
-          <div class="row my-5">
+          <div class="row my-5 text-center">
             <h1>Show Control</h1>
           </div>
-          <div class="row">
-            <button id="chatButton">Show Text Input</button>
+          <hr />
+          <div class="row m-3">
+            <button class="p-2 font-xl" id="chatButton">Show Text Input</button>
+          </div>
+          <hr />
+          <div class="row m-3">
+              <input
+                type="text"
+                id="colorInput"
+                value="#cc458faa"
+                  data-coloris
+              />
+              <input 
+              type="text"
+              id="transitionTimeInput"
+              class="mx-2 p-2"
+              value="2"
+              />
+              <button id="colorChangeButton" class="mx-2 p-2">Change BG Color</button>
+            </div>
           </div>
           <!-- <div class="row m-3">
             <h4>Press buttons below to activate scene</h4>

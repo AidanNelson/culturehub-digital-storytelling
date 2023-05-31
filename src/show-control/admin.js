@@ -31,6 +31,18 @@ function setup() {
     socket.emit('stateUpdate', { chat: !activeState.chat });
   });
 
+  // set BG color
+  let colorChangeButton = document.getElementById('colorChangeButton');
+  colorChangeButton.addEventListener('click', () => {
+    let color = document.getElementById('colorInput').value;
+    let time = document.getElementById('transitionTimeInput').value;
+    console.log('transition to color', color, ' over ', time, 'seconds');
+    socket.emit('colorChange', {
+      color,
+      time,
+    });
+  });
+
   // all updates
   const updateUI = () => {
     updateChatButton();

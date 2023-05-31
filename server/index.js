@@ -68,6 +68,11 @@ async function main() {
       io.emit('stateUpdate', activeState);
     });
 
+    socket.on('colorChange', ({ color, time }) => {
+      console.log('received color change input: ', color, '/', time, 's');
+      io.emit('colorChange', { color, time });
+    });
+
     // send chat
     db.find({})
       .sort({ createdAt: -1 })

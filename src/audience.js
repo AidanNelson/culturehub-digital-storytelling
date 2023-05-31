@@ -71,6 +71,10 @@ function init() {
     updateUI();
   });
 
+  socket.on('colorChange', ({ color, time }) => {
+    fadeBackgroundToColor(color, time);
+  });
+
   mediasoupPeer = new SimpleMediasoupPeer(socket);
   mediasoupPeer.on('track', gotTrack);
 }
