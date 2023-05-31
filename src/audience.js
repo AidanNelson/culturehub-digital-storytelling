@@ -16,6 +16,13 @@ window.onload = () => {
 
   document.getElementById('startButton').addEventListener('click', () => {
     document.getElementById('startButton').style.display = 'none';
+    const el = document.getElementById('buttonOverlay');
+    el.style.pointerEvents = 'none';
+    console.log('changing background of ', el);
+    gsap.to(el, {
+      duration: 1, // Animation duration (in seconds)
+      backgroundColor: '#00000000', // Target color
+    });
     init();
   });
 
@@ -34,9 +41,11 @@ window.onload = () => {
 };
 
 function updateUI() {
-  document.getElementById('textInput').style.display = activeState.chat
-    ? 'block'
-    : 'none';
+  if (activeState.chat) {
+    document.getElementById('textInput').classList.remove('d-none');
+  } else {
+    document.getElementById('textInput').classList.add('d-none');
+  }
 }
 
 function init() {
@@ -143,7 +152,7 @@ function setBGColor(newColor) {
   fadeBackgroundToColor(newColor, 0);
 }
 
-document.addEventListener('click', () => {
-  fadeBackgroundToColor(`#ff0000`, 10);
-  // setBGColor('pink');
-});
+// document.addEventListener('click', () => {
+//   fadeBackgroundToColor(`#ff0000`, 10);
+//   // setBGColor('pink');
+// });

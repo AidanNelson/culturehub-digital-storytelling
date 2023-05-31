@@ -20,9 +20,13 @@ function init() {
   socket.on('chat', (text) => {
     console.log('got text', text);
     let t = '';
-    text.data.forEach((doc) => {
-      t += doc.text;
-      t += '\n\n\n';
+    let docs = text.data.reverse();
+    docs.forEach((doc) => {
+      // console.log(doc.text.length);
+      if (doc.text.length > 0) {
+        t += doc.text;
+        t += '\n\n';
+      }
     });
     document.getElementById('textContainer').innerText = t;
   });
