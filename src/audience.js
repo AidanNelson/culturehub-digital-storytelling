@@ -9,6 +9,7 @@ let mediasoupPeer;
 let activeState = {
   chat: false,
   backgroundImage: false,
+  backgroundColor: '#000000',
 };
 
 window.onload = () => {
@@ -69,6 +70,10 @@ function init() {
     console.log('received state update: ', update);
     activeState = { ...activeState, ...update };
     updateUI();
+    // only update if there is a change here
+    if (update.backgroundColor) {
+      fadeBackgroundToColor(activeState.backgroundColor, 0.25); // bump
+    }
   });
 
   socket.on('colorChange', ({ color, time }) => {

@@ -15,6 +15,7 @@ let clients = {};
 let activeState = {
   chat: true,
   backgroundImage: false,
+  backgroundColor: '#000000',
 };
 
 async function main() {
@@ -70,6 +71,7 @@ async function main() {
 
     socket.on('colorChange', ({ color, time }) => {
       console.log('received color change input: ', color, '/', time, 's');
+      activeState.backgroundColor = color;
       io.emit('colorChange', { color, time });
     });
 
