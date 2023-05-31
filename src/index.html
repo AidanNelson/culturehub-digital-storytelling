@@ -65,6 +65,18 @@
       left: 0;
     }
 
+    #textInputBox {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      box-shadow: 5px 5px 25px rgba(255, 255, 255, 0.5);
+      width: 300px;
+    }
+    #textInputSubmitButton {
+      background-color: rgba(0, 0, 0, 0.5);
+      box-shadow: 5px 5px 25px rgba(255, 255, 255, 0.5);
+      color: white;
+    }
+
     /* #sceneContainer {
       position: absolute;
       top: 0px;
@@ -91,6 +103,13 @@
       <div id="videoShadow"></div>
       <video id="broadcastVideo" autoplay playsinline muted></video>
       <audio id="broadcastAudio" autoplay playsinline></audio>
+      <form
+        id="textInput"
+        class="position-absolute top-75 start-50 translate-middle d-flex flex-row m-2"
+      >
+        <input type="text" id="textInputBox" class="p-2" />
+        <button id="textInputSubmitButton" class="p-2">꩜</button>
+      </form>
     </div>
 
     <script src="../libs/SimpleMediasoupPeer.js"></script>

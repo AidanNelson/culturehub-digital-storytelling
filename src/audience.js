@@ -6,12 +6,38 @@ CultureHub & LaMaMa ETC, May 2022
 let socket;
 let mediasoupPeer;
 
+let activeState = {
+  chat: false,
+  backgroundImage: false,
+};
+
 window.onload = () => {
+  updateUI();
+
   document.getElementById('startButton').addEventListener('click', () => {
     document.getElementById('startButton').style.display = 'none';
     init();
   });
+
+  // text input
+  document
+    .getElementById('textInputSubmitButton')
+    .addEventListener('click', (ev) => {
+      ev.preventDefault();
+
+      let textInputBox = document.getElementById('textInputBox');
+      let text = textInputBox.value;
+      console.log('sending text:', text);
+      socket.emit('chat', text);
+      textInputBox.value = '';
+    });
 };
+
+function updateUI() {
+  document.getElementById('textInput').style.display = activeState.chat
+    ? 'block'
+    : 'none';
+}
 
 function init() {
   console.log('~~~~~~~~~~~~~~~~~');
@@ -28,6 +54,12 @@ function init() {
   socket.on('sceneIdx', (data) => {
     console.log('SceneIdx:', data);
     setScene(data);
+  });
+
+  socket.on('stateUpdate', (update) => {
+    console.log('received state update: ', update);
+    activeState = { ...activeState, ...update };
+    updateUI();
   });
 
   mediasoupPeer = new SimpleMediasoupPeer(socket);

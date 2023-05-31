@@ -8,9 +8,14 @@ const MediasoupManager = require('simple-mediasoup-peer-server');
 const fs = require('node:fs');
 
 let clients = {};
-let adminMessage = '';
-let sceneId = null; // start at no scene
-let shouldShowChat = false;
+// let adminMessage = '';
+// let sceneId = null; // start at no scene
+// let shouldShowChat = false;
+
+let activeState = {
+  chat: true,
+  backgroundImage: false,
+};
 
 async function main() {
   const app = express();
@@ -55,6 +60,14 @@ async function main() {
         ' clients connected'
     );
 
+    socket.emit('stateUpdate', activeState);
+
+    socket.on('stateUpdate', (update) => {
+      console.log('received state update: ', update);
+      activeState = { ...activeState, ...update };
+      io.emit('stateUpdate', activeState);
+    });
+
     // send chat
     db.find({})
       .sort({ createdAt: -1 })
@@ -64,54 +77,55 @@ async function main() {
       });
 
     socket.emit('clients', Object.keys(clients));
-    if (sceneId) socket.emit('sceneIdx', sceneId);
-    socket.emit('adminMessage', adminMessage);
-    socket.emit('showChat', shouldShowChat);
+    // if (sceneId) socket.emit('sceneIdx', sceneId);
+    // socket.emit('adminMessage', adminMessage);
+    // socket.emit('showChat', shouldShowChat);
 
-    socket.broadcast.emit('clientConnected', socket.id);
+    // socket.broadcast.emit('clientConnected', socket.id);
 
     // then add to our clients object
     clients[socket.id] = {}; // store initial client state here
     // clients[socket.id].position = [5000, 100, 0];
-    clients[socket.id].mousePosition = { x: -100, y: -100 };
-    clients[socket.id].size = 1;
+    // clients[socket.id].mousePosition = { x: -100, y: -100 };
+    // clients[socket.id].size = 1;
 
     socket.on('disconnect', () => {
       delete clients[socket.id];
-      io.sockets.emit('clientDisconnected', socket.id);
+      // io.sockets.emit('clientDisconnected', socket.id);
       console.log('client disconnected: ', socket.id);
     });
 
-    socket.on('interaction', (msg) => {
-      console.log('relaying socket message');
-      io.sockets.emit('interaction', { ...msg, id: socket.id }); // add source socket id to each message
-    });
+    // socket.on('interaction', (msg) => {
+    //   console.log('relaying socket message');
+    //   io.sockets.emit('interaction', { ...msg, id: socket.id }); // add source socket id to each message
+    // });
 
     // the server will aggregate mouse position data so the clients receive a single update for all peers
-    socket.on('mousePosition', (msg) => {
-      clients[socket.id].mousePosition = msg;
-    });
+    // socket.on('mousePosition', (msg) => {
+    //   clients[socket.id].mousePosition = msg;
+    // });
 
-    socket.on('move', (data) => {
-      let now = Date.now();
-      if (clients[socket.id]) {
-        clients[socket.id].position = data;
-        clients[socket.id].lastSeenTs = now;
-      }
-    });
-    socket.on('size', (data) => {
-      if (clients[socket.id]) {
-        clients[socket.id].size = data;
-      }
-    });
-    socket.on('sceneIdx', (data) => {
-      console.log('Switching to scene ', data);
-      sceneId = data;
-      io.emit('sceneIdx', data);
-    });
+    // socket.on('move', (data) => {
+    //   let now = Date.now();
+    //   if (clients[socket.id]) {
+    //     clients[socket.id].position = data;
+    //     clients[socket.id].lastSeenTs = now;
+    //   }
+    // });
+    // socket.on('size', (data) => {
+    //   if (clients[socket.id]) {
+    //     clients[socket.id].size = data;
+    //   }
+    // });
+    // socket.on('sceneIdx', (data) => {
+    //   console.log('Switching to scene ', data);
+    //   sceneId = data;
+    //   io.emit('sceneIdx', data);
+    // });
 
     socket.on('chat', (message) => {
-      db.insert(message);
+      console.log('recevied chat message:', message);
+      db.insert({ text: message });
 
       db.find({})
         .sort({ createdAt: -1 })
@@ -123,29 +137,29 @@ async function main() {
     });
 
     // Perhaps create a generic type
-    socket.on('data', (message) => {
-      console.log(message);
-      io.emit('data', message);
-    });
+    // socket.on('data', (message) => {
+    //   console.log(message);
+    //   io.emit('data', message);
+    // });
 
-    socket.on('speech', (message) => {
-      io.emit('speech', message);
-    });
+    // socket.on('speech', (message) => {
+    //   io.emit('speech', message);
+    // });
 
-    socket.on('osc', (message) => {
-      console.log('got OSC, rebroadcasting:', message);
-      io.emit('osc', message);
-    });
+    // socket.on('osc', (message) => {
+    //   console.log('got OSC, rebroadcasting:', message);
+    //   io.emit('osc', message);
+    // });
 
-    socket.on('oscForSockets', (message) => {
-      console.log('got OSC, rebroadcasting:', message);
-      io.emit('oscForSo ckets', message);
-    });
+    // socket.on('oscForSockets', (message) => {
+    //   console.log('got OSC, rebroadcasting:', message);
+    //   io.emit('oscForSo ckets', message);
+    // });
 
-    socket.on('showChat', (data) => {
-      shouldShowChat = data;
-      io.emit('showChat', data);
-    });
+    // socket.on('showChat', (data) => {
+    //   shouldShowChat = data;
+    //   io.emit('showChat', data);
+    // });
 
     socket.on('clearChat', () => {
       console.log('Clearing chat DB');
@@ -167,21 +181,21 @@ async function main() {
   });
 
   // update all sockets at regular intervals
-  setInterval(() => {
-    io.sockets.emit('userPositions', clients);
-    io.sockets.emit('mousePositions', clients);
-  }, 20);
+  // setInterval(() => {
+  //   io.sockets.emit('userPositions', clients);
+  //   io.sockets.emit('mousePositions', clients);
+  // }, 20);
 
   // every X seconds, check for inactive clients and send them into cyberspace
-  setInterval(() => {
-    let now = Date.now();
-    for (let id in clients) {
-      if (now - clients[id].lastSeenTs > 120000) {
-        console.log('Culling inactive user with id', id);
-        clients[id].position[1] = -5; // send them underground
-      }
-    }
-  }, 10000);
+  // setInterval(() => {
+  //   let now = Date.now();
+  //   for (let id in clients) {
+  //     if (now - clients[id].lastSeenTs > 120000) {
+  //       console.log('Culling inactive user with id', id);
+  //       clients[id].position[1] = -5; // send them underground
+  //     }
+  //   }
+  // }, 10000);
 
   new MediasoupManager(io);
 }

@@ -1,7 +1,12 @@
 let socket;
-let numScenes = 6;
+// let numScenes = 6;
 
-let sceneSwitcherButtons = {};
+// let sceneSwitcherButtons = {};
+
+let activeState = {
+  chat: false,
+  backgroundImage: false,
+};
 
 function setup() {
   console.log('Setting up socket connection');
@@ -9,8 +14,34 @@ function setup() {
   if (window.location.hostname === 'prometheus.livelab.app') {
     socket = io('https://prometheus.livelab.app');
   } else {
-    socket = io('http://localhost:3131');
+    socket = io('https://localhost');
   }
+
+  // toggle chat
+  let chatButton = document.getElementById('chatButton');
+  const updateChatButton = () => {
+    chatButton.style.backgroundColor = activeState.chat ? 'red' : 'white';
+    chatButton.style.color = activeState.chat ? 'white' : 'black';
+
+    chatButton.innerText = activeState.chat
+      ? 'Hide Text Input'
+      : 'Show Text Input';
+  };
+  chatButton.addEventListener('click', () => {
+    socket.emit('stateUpdate', { chat: !activeState.chat });
+  });
+
+  // all updates
+  const updateUI = () => {
+    updateChatButton();
+  };
+
+  // update state from server
+  socket.on('stateUpdate', (update) => {
+    console.log('received state update: ', update);
+    activeState = { ...activeState, ...update };
+    updateUI();
+  });
 
   // document.getElementById('clearChat').addEventListener('click', () => {
   //   socket.emit('clearChat');
@@ -26,33 +57,33 @@ function setup() {
   // });
 
   // setup scene selection logic
-  let sceneSelect = document.getElementById('sceneSelect');
-  for (let i = 0; i < availableScenes.length; i++) {
-    let sceneName = availableScenes[i];
-    const option = document.createElement('option');
-    option.innerText = sceneName;
-    sceneSelect.appendChild(option);
-  }
-  let sceneGoButton = document.getElementById('sceneGoButton');
-  sceneGoButton.addEventListener('click', () => {
-    console.log('go to new scene');
-    console.log(sceneSelect.value);
-    socket.emit('sceneIdx', sceneSelect.value);
-  });
+  // let sceneSelect = document.getElementById('sceneSelect');
+  // for (let i = 0; i < availableScenes.length; i++) {
+  //   let sceneName = availableScenes[i];
+  //   const option = document.createElement('option');
+  //   option.innerText = sceneName;
+  //   sceneSelect.appendChild(option);
+  // }
+  // let sceneGoButton = document.getElementById('sceneGoButton');
+  // sceneGoButton.addEventListener('click', () => {
+  //   console.log('go to new scene');
+  //   console.log(sceneSelect.value);
+  //   socket.emit('sceneIdx', sceneSelect.value);
+  // });
 
-  socket.on('sceneIdx', (data) => {
-    console.log('Current scene from server: ', data);
-    sceneSelect.value = data;
+  // socket.on('sceneIdx', (data) => {
+  //   console.log('Current scene from server: ', data);
+  //   sceneSelect.value = data;
 
-    // TODO make this work
-    // sceneSelect.
-    // for (let id in sceneSwitcherButtons) {
-    //   sceneSwitcherButtons[id].classList.remove('activeButton');
-    // }
-    // if (sceneSwitcherButtons[data]) {
-    //   sceneSwitcherButtons[data].classList.add('activeButton');
-    // }
-  });
+  // TODO make this work
+  // sceneSelect.
+  // for (let id in sceneSwitcherButtons) {
+  //   sceneSwitcherButtons[id].classList.remove('activeButton');
+  // }
+  // if (sceneSwitcherButtons[data]) {
+  //   sceneSwitcherButtons[data].classList.add('activeButton');
+  // }
+  // });
 
   // let lobbyButton = document.getElementById('activateLobbyButton');
   // lobbyButton.addEventListener('click', () => {
