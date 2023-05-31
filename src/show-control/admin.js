@@ -35,6 +35,22 @@ function setup() {
     socket.emit('clearChat');
   });
 
+  // set BG image
+  let bgButton = document.getElementById('bgButton');
+  const updateBGButton = () => {
+    bgButton.style.backgroundColor = activeState.chat ? 'red' : 'white';
+    bgButton.style.color = activeState.backgroundImage ? 'white' : 'black';
+
+    bgButton.innerText = activeState.backgroundImage
+      ? 'Hide BG Input'
+      : 'Show BG Input';
+  };
+  bgButton.addEventListener('click', () => {
+    socket.emit('stateUpdate', {
+      backgroundImage: !activeState.backgroundImage,
+    });
+  });
+
   // set BG color
   let colorChangeButton = document.getElementById('colorChangeButton');
   colorChangeButton.addEventListener('click', () => {

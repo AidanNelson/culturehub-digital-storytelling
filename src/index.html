@@ -12,14 +12,24 @@
   />
 
   <style>
+    @import url('./assets/NotoSans-Medium.ttf');
     html,
     body {
+      font-family: 'Noto Sans', sans-serif !important;
       height: 100vh;
       width: 100vw;
       background-color: black;
       margin: 0px;
       padding: 0px;
       overflow: hidden;
+    }
+    #backgroundImage {
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      z-index: 2;
+      background-color: black;
+      background-image: url('../assets/bg.png');
     }
     #buttonOverlay {
       width: 100vw;
@@ -28,7 +38,9 @@
       z-index: 10;
       background-color: black;
     }
+
     #startButton {
+      font-family: 'Noto Sans', sans-serif !important;
       position: absolute;
       margin-left: 50vw;
       top: 50vh;
@@ -84,6 +96,18 @@
       color: white;
     }
 
+    .visible {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 2s linear;
+    }
+
+    .hidden {
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s 2s, opacity 2s linear;
+    }
+
     /* #sceneContainer {
       position: absolute;
       top: 0px;
@@ -99,6 +123,14 @@
   <body>
     <div id="buttonOverlay">
       <button id="startButton">Welcome</button>
+    </div>
+    <div id="backgroundImage">
+      <h2
+        id="showWillBegin"
+        class="position-absolute top-0 mt-5 fs-1 text-center start-50 translate-middle text-white"
+      >
+        Show will begin shortly
+      </h2>
     </div>
 
     <!-- <iframe id="sceneContainer"></iframe> -->

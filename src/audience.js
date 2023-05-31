@@ -47,6 +47,13 @@ function updateUI() {
   } else {
     document.getElementById('textInput').classList.add('d-none');
   }
+  if (activeState.backgroundImage) {
+    document.getElementById('backgroundImage').classList.remove('hidden');
+    document.getElementById('backgroundImage').classList.add('visible');
+  } else {
+    document.getElementById('backgroundImage').classList.add('hidden');
+    document.getElementById('backgroundImage').classList.remove('visible');
+  }
 }
 
 function init() {
