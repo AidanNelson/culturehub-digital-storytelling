@@ -31,6 +31,10 @@ function setup() {
     socket.emit('stateUpdate', { chat: !activeState.chat });
   });
 
+  document.getElementById('clearChat').addEventListener('click', () => {
+    socket.emit('clearChat');
+  });
+
   // set BG color
   let colorChangeButton = document.getElementById('colorChangeButton');
   colorChangeButton.addEventListener('click', () => {
@@ -54,10 +58,6 @@ function setup() {
     activeState = { ...activeState, ...update };
     updateUI();
   });
-
-  // document.getElementById('clearChat').addEventListener('click', () => {
-  //   socket.emit('clearChat');
-  // });
 
   // document.getElementById('sendAdminMessage').addEventListener('click', () => {
   //   let message = document.getElementById('adminMessageInput').value;
