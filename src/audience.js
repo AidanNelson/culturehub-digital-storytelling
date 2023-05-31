@@ -22,7 +22,7 @@ function init() {
   if (window.location.hostname === 'prometheus.livelab.app') {
     socket = io('https://prometheus.livelab.app');
   } else {
-    socket = io('http://localhost:3131');
+    socket = io('https://localhost');
   }
 
   socket.on('sceneIdx', (data) => {
