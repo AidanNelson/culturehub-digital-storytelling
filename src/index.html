@@ -30,6 +30,7 @@
       z-index: 2;
       background-color: black;
       background-image: url('../assets/bg.png');
+      /* display: none; */
     }
     #buttonOverlay {
       width: 100vw;
@@ -124,12 +125,12 @@
     <div id="buttonOverlay">
       <button id="startButton">Welcome</button>
     </div>
-    <div id="backgroundImage">
+    <div id="backgroundImage" class="hidden">
       <h2
         id="showWillBegin"
         class="position-absolute top-0 mt-5 fs-1 text-center start-50 translate-middle text-white"
       >
-        Show will begin shortly
+        The experiment will begin shortly...
       </h2>
     </div>
 
@@ -142,13 +143,35 @@
       <!-- <div id="videoShadow"></div> -->
       <video id="broadcastVideo" autoplay playsinline muted></video>
       <audio id="broadcastAudio" autoplay playsinline></audio>
-      <form
+      <div
         id="textInput"
-        class="position-absolute bottom-0 start-50 translate-middle d-flex flex-row m-2"
+        class="position-absolute bottom-0 start-50 translate-middle m-2 w-50"
       >
+        <form class="w-100">
+          <div class="mb-3">
+            <label
+              id="textPrompt"
+              for="textInputBox"
+              class="form-label text-white fs-3"
+              >I regret that...</label
+            >
+            <div class="d-flex" style="background-color: rgba(0, 0, 0, 0)">
+              <input
+                type="text"
+                class="text-white fs-3"
+                style="width: 90%"
+                id="textInputBox"
+              />
+              <button id="textInputSubmitButton" class="p-2" style="width: 10%">
+                ꩜
+              </button>
+            </div>
+          </div>
+        </form>
+        <!-- <label for="textInputBox" class="form-label">Email address</label>
         <input type="text" id="textInputBox" class="p-2" />
-        <button id="textInputSubmitButton" class="p-2">꩜</button>
-      </form>
+        <button id="textInputSubmitButton" class="p-2">꩜</button> -->
+      </div>
     </div>
 
     <script src="../libs/SimpleMediasoupPeer.js"></script>

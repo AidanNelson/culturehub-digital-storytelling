@@ -10,6 +10,7 @@ let activeState = {
   chat: false,
   backgroundImage: false,
   backgroundColor: '#000000',
+  textPrompt: '',
 };
 
 window.onload = () => {
@@ -54,6 +55,10 @@ function updateUI() {
     document.getElementById('backgroundImage').classList.add('hidden');
     document.getElementById('backgroundImage').classList.remove('visible');
   }
+  if ('textPrompt' in activeState) {
+    console.log('updating label text');
+    document.getElementById('textPrompt').innerText = activeState.textPrompt;
+  }
 }
 
 function init() {
@@ -76,6 +81,7 @@ function init() {
   socket.on('stateUpdate', (update) => {
     console.log('received state update: ', update);
     activeState = { ...activeState, ...update };
+    console.log('active state:', activeState);
     updateUI();
     // only update if there is a change here
     if (update.backgroundColor) {

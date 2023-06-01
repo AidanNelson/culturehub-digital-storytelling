@@ -63,6 +63,15 @@ function setup() {
     });
   });
 
+  let textPromptButton = document.getElementById('textPromptButton');
+  textPromptButton.addEventListener('click', () => {
+    let text = document.getElementById('textPromptInput').value;
+    // console.log('u to color', color, ' over ', time, 'seconds');
+    socket.emit('stateUpdate', {
+      textPrompt: text,
+    });
+  });
+
   // all updates
   const updateUI = () => {
     updateChatButton();

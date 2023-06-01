@@ -16,6 +16,7 @@ let activeState = {
   chat: true,
   backgroundImage: false,
   backgroundColor: '#000000',
+  textPrompt: '',
 };
 
 async function main() {
