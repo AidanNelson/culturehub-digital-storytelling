@@ -11,6 +11,7 @@ let activeState = {
   backgroundImage: false,
   backgroundColor: '#000000',
   textPrompt: '',
+  adminText: '',
 };
 
 window.onload = () => {
@@ -58,6 +59,10 @@ function updateUI() {
   if ('textPrompt' in activeState) {
     console.log('updating label text');
     document.getElementById('textPrompt').innerText = activeState.textPrompt;
+  }
+  if ('adminText' in activeState) {
+    console.log('updating admin text');
+    document.getElementById('adminText').innerText = activeState.adminText;
   }
 }
 

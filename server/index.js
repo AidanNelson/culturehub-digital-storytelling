@@ -17,6 +17,7 @@ let activeState = {
   backgroundImage: false,
   backgroundColor: '#000000',
   textPrompt: '',
+  adminText: '',
 };
 
 async function main() {

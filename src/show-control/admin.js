@@ -71,6 +71,14 @@ function setup() {
       textPrompt: text,
     });
   });
+  let adminTextButton = document.getElementById('adminTextButton');
+  adminTextButton.addEventListener('click', () => {
+    let text = document.getElementById('adminTextInput').value;
+    // console.log('u to color', color, ' over ', time, 'seconds');
+    socket.emit('stateUpdate', {
+      adminText: text,
+    });
+  });
 
   // all updates
   const updateUI = () => {
