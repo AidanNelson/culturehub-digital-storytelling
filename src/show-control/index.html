@@ -35,6 +35,9 @@
         width: 50px;
         height: 50px;
       }
+      hr {
+        border: 1px solid white !important;
+      }
     </style>
   </head>
 
@@ -52,6 +55,18 @@
               <button id="clearChat">Clear Chat Messages</button>
             </div>
           </div>
+
+        <hr />
+          <div class="row m-3">
+            <input
+              type="text"
+              id="textPromptInput"
+            />
+            
+            <button id="textPromptButton" class="mx-2 p-2">Change Prompt Text</button>
+            <div id="currTextPrompt" class="text-white"></div>
+          </div>
+        
           <hr />
           <div class="row m-3">
             <button class="p-2 font-xl" id="bgButton">Show Background</button>
@@ -71,27 +86,22 @@
               value="2"
               />
               <button id="colorChangeButton" class="mx-2 p-2">Change BG Color</button>
+              <span id="currBGColor" style="width: 50px; height: 50px;"></span>
             </div>
-          </div>
+          
           <hr />
-          <div class="row m-3">
-              <input
-                type="text"
-                id="textPromptInput"
-              />
-              
-              <button id="textPromptButton" class="mx-2 p-2">Change Prompt Text</button>
-            </div>
-          </div>
+          
           <div class="row m-3">
             <input
               type="text"
               id="adminTextInput"
             />
-            
             <button id="adminTextButton" class="mx-2 p-2">Change Admin Text</button>
+            <div id="currAdminText" class="text-white"></div>
           </div>
         </div>
+        </div>
+
           <!-- <div class="row m-3">
             <h4>Press buttons below to activate scene</h4>
           </div>

@@ -35,8 +35,10 @@ window.onload = () => {
     .addEventListener('click', (ev) => {
       ev.preventDefault();
 
+      let promptText = document.getElementById('textPrompt').innerText;
       let textInputBox = document.getElementById('textInputBox');
       let text = textInputBox.value;
+      text = promptText + ' ' + text;
       console.log('sending text:', text);
       socket.emit('chat', text);
       textInputBox.value = '';

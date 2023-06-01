@@ -38,18 +38,22 @@ function setup() {
   // set BG image
   let bgButton = document.getElementById('bgButton');
   const updateBGButton = () => {
-    bgButton.style.backgroundColor = activeState.chat ? 'red' : 'white';
+    bgButton.style.backgroundColor = activeState.backgroundImage
+      ? 'red'
+      : 'white';
     bgButton.style.color = activeState.backgroundImage ? 'white' : 'black';
 
     bgButton.innerText = activeState.backgroundImage
-      ? 'Hide BG Input'
-      : 'Show BG Input';
+      ? 'Hide Background'
+      : 'Show Background';
   };
   bgButton.addEventListener('click', () => {
+    updateBGButton();
     socket.emit('stateUpdate', {
       backgroundImage: !activeState.backgroundImage,
     });
   });
+  // updateBGButton();
 
   // set BG color
   let colorChangeButton = document.getElementById('colorChangeButton');
@@ -80,9 +84,18 @@ function setup() {
     });
   });
 
+  function updateTextBoxes() {
+    document.getElementById('currTextPrompt').innerText =
+      activeState.textPrompt;
+    document.getElementById('currAdminText').innerText = activeState.adminText;
+  }
   // all updates
   const updateUI = () => {
     updateChatButton();
+    updateBGButton();
+    updateTextBoxes();
+    document.getElementById('currBGColor').style.backgroundColor =
+      activeState.backgroundColor;
   };
 
   // update state from server
@@ -90,6 +103,12 @@ function setup() {
     console.log('received state update: ', update);
     activeState = { ...activeState, ...update };
     updateUI();
+  });
+
+  socket.on('colorChange', ({ color, time }) => {
+    activeState.backgroundColor = color;
+    document.getElementById('currBGColor').style.backgroundColor =
+      activeState.backgroundColor;
   });
 
   // document.getElementById('sendAdminMessage').addEventListener('click', () => {
